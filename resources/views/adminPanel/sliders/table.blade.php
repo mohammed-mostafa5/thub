@@ -50,14 +50,13 @@
                 {!! Form::open(['route' => ['adminPanel.sliders.destroy', $slider->id], 'method' => 'delete']) !!}
                 <div class='btn btn-sm-group'>
                     @can('sliders view')
-                    <a href="{{ route('adminPanel.sliders.show', [$slider->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.sliders.show', [$slider->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                     @endcan
                     @can('sliders edit')
-                    <a href="{{ route('adminPanel.sliders.edit', [$slider->id]) }}" class='btn btn-sm btn-primary'><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('adminPanel.sliders.edit', [$slider->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan
                     @can('sliders destroy')
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm
-                    btn-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

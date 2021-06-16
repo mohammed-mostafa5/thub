@@ -41,16 +41,15 @@
                 {!! Form::open(['route' => ['adminPanel.metas.destroy', $meta->id], 'method' => 'delete']) !!}
                 <div class='btn btn-sm-group'>
                     @can('metas view')
-                    <a href="{{ route('adminPanel.metas.show', [$meta->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.metas.show', [$meta->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                     @endcan
                     @can('metas edit')
-                    <a href="{{ route('adminPanel.metas.edit', [$meta->id]) . "?languages=$locale" }}" class='btn btn-sm btn-primary'>
+                    <a href="{{ route('adminPanel.metas.edit', [$meta->id]) . "?languages=$locale" }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'>
                         <i class="fa fa-edit"></i>
                     </a>
                     @endcan
                     @can('metas destroy')
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm
-                    btn-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

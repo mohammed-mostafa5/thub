@@ -21,7 +21,6 @@
         <tr>
             <th>@lang('models/brands.fields.logo')</th>
             <th>@lang('models/brands.fields.text')</th>
-            <th>@lang('models/vehicleModels.plural')</th>
             <th>@lang('crud.action')</th>
         </tr>
     </thead>
@@ -30,22 +29,18 @@
         <tr>
             <td><img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{ $brand->logo_original_path }}" alt="{{$brand->text}}" width="80"></td>
             <td>{{$brand->text}}</td>
-            <td>
-                <a href="{{route('adminPanel.brands.vehicleModels.index', $brand->id)}}">
-                    {{$brand->models_count ?? 0}}
-                </a>
-            </td>
+
             <td nowrap>
                 {!! Form::open(['route' => ['adminPanel.brands.destroy', $brand->id], 'method' => 'delete']) !!}
                 <div class='btn btn-sm-group'>
                     @can('brands view')
-                    <a href="{{ route('adminPanel.brands.show', [$brand->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.brands.show', [$brand->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                     @endcan
                     @can('brands edit')
-                    <a href="{{ route('adminPanel.brands.edit', [$brand->id]) . '?languages=' . \App::getLocale() }}" class='btn btn-sm btn-primary'><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('adminPanel.brands.edit', [$brand->id]) . '?languages=' . \App::getLocale() }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan
                     @can('brands destroy')
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

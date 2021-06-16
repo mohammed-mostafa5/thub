@@ -82,9 +82,4 @@ class Brand extends Model
 
     ################################### Relations #####################################
 
-
-    public function models()
-    {
-        return $this->hasMany(VehicleModel::class);
-    }
 }

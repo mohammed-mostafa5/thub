@@ -33,13 +33,13 @@
                 {!! Form::open(['route' => ['adminPanel.faqCategories.destroy', $faqCategory->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     @can('faqCategories view')
-                    <a href="{{ route('adminPanel.faqCategories.show', [$faqCategory->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.faqCategories.show', [$faqCategory->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                     @endcan
                     @can('faqCategories edit')
-                    <a href="{{ route('adminPanel.faqCategories.edit', [$faqCategory->id]) }}" class='btn btn-sm btn-primary'><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('adminPanel.faqCategories.edit', [$faqCategory->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan
                     @can('faqCategories destroy')
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

@@ -92,16 +92,9 @@ class MainController extends Controller
 
     public function brands()
     {
-        $brands = Brand::with('models')->get();
+        $brands = Brand::get();
 
         return response()->json(compact('brands'));
-    }
-
-    public function vehicle_types()
-    {
-        $veicle_types = VehicleType::get();
-
-        return response()->json(compact('veicle_types'));
     }
 
     public function colors()
@@ -204,30 +197,9 @@ class MainController extends Controller
         return response()->json(compact('blog'));
     }
 
-    public function services()
-    {
-        $services = Service::latest()->get();
-
-        return response()->json(compact('services'));
-    }
-
     public function faqs()
     {
         $data['faqCategories'] = FaqCategory::orderByTranslation('name')->with('faqs')->get();
-
-        return response()->json($data);
-    }
-
-    public function cancelTripReasons()
-    {
-        $data['cancel_trip_reasons'] = Reason::cancelTrip()->get();
-
-        return response()->json($data);
-    }
-
-    public function cancelRequestReasons()
-    {
-        $data['cancel_request_reasons'] = Reason::cancelRequest()->get();
 
         return response()->json($data);
     }

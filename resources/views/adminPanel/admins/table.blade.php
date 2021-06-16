@@ -44,9 +44,9 @@
             <td nowrap>
                 {!! Form::open(['route' => ['adminPanel.admins.destroy', $admin->id], 'method' => 'delete']) !!}
                 <div class='btn btn-sm-group'>
-                    <a href="{{ route('adminPanel.admins.show', [$admin->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
-                    <a href="{{ route('adminPanel.admins.edit', [$admin->id]) }}" class='btn btn-sm btn-primary'><i class="fa fa-edit"></i></a>
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                    <a href="{{ route('adminPanel.admins.show', [$admin->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.admins.edit', [$admin->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
                 </div>
                 {!! Form::close() !!}
             </td>

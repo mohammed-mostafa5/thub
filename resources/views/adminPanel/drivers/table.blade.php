@@ -59,7 +59,7 @@
             <td>{{ $driver->status }}</td>
             <td nowrap>
                 <div class='btn btn-sm-group'>
-                    <a href="{{ route('adminPanel.drivers.show', [$driver->id]) }}" class='btn btn-sm btn-success'><i class="fa fa-eye"></i></a>
+                    <a href="{{ route('adminPanel.drivers.show', [$driver->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
                 </div>
             </td>
         </tr>

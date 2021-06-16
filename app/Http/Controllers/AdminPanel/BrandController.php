@@ -30,7 +30,7 @@ class BrandController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $brands = Brand::withCount('models')->get();
+        $brands = Brand::get();
 
         return view('adminPanel.brands.index')
             ->with('brands', $brands);
