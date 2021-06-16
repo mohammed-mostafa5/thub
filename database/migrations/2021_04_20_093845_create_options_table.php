@@ -16,12 +16,10 @@ class CreateOptionsTable extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('min_model_year')->default(2010);
-            $table->integer('cap_max_free_cancellation')->default(2)->comment('By minutes');
-            $table->integer('towing_max_free_cancellation')->default(5)->comment('By minutes');
-            $table->integer('cap_request_fees')->default(5)->comment('By minutes');
-            $table->integer('towing_request_fees')->default(5);
-            $table->integer('towing_min_balance')->default(8);
+            $table->string('logo')->default('logo.png');
+            $table->string('welcome_message')->default('Welcome to Thub');
+            $table->string('welcome_photo')->default('welcome.jpg');
+
             $table->timestamps();
             $table->softDeletes();
         });

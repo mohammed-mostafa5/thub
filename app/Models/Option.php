@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageUploaderTrait;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,46 +16,92 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Option extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ImageUploaderTrait;
 
 
     public $table = 'options';
 
-
     protected $dates = ['deleted_at'];
 
-
-
     public $fillable = [
-        'min_model_year',
-        'cap_max_free_cancellation',
-        'towing_max_free_cancellation',
-        'cap_request_fees',
-        'towing_request_fees',
-        'towing_min_balance',
+        'logo',
+        'welcome_message',
+        'welcome_photo',
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'min_model_year' => 'integer'
-    ];
-
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
     public static $rules = [
-        'min_model_year'                => 'required',
-        'cap_max_free_cancellation'     => 'required',
-        'towing_max_free_cancellation'  => 'required',
-        'cap_request_fees'              => 'required',
-        'towing_request_fees'           => 'required',
-        'towing_min_balance'            => 'required',
+        'logo'              => 'required',
+        'welcome_message'   => 'required',
+        'welcome_photo'     => 'required',
     ];
+
+
+    ################################### Appends #####################################
+
+    protected $appends = [
+        'logo_original_path',
+        'logo_thumbnail_path',
+        'welcome_photo_original_path',
+        'welcome_photo_thumbnail_path',
+    ];
+
+    // logo
+    public function setLogoAttribute($file)
+    {
+        try {
+            if ($file) {
+
+                $fileName = $this->createFileName($file);
+
+                $this->originalImage($file, $fileName);
+
+                $this->thumbImage($file, $fileName, 190, 275);
+
+                $this->attributes['logo'] = $fileName;
+            }
+        } catch (\Throwable $th) {
+            $this->attributes['logo'] = $file;
+        }
+    }
+
+    public function getLogoOriginalPathAttribute()
+    {
+        return $this->logo ? asset('uploads/images/original/' . $this->logo) : null;
+    }
+
+    public function getLogoThumbnailPathAttribute()
+    {
+        return $this->logo ? asset('uploads/images/thumbnail/' . $this->logo) : null;
+    }
+    // logo
+
+    // Welcome Photo
+    public function setWelcomePhotoAttribute($file)
+    {
+        try {
+            if ($file) {
+
+                $fileName = $this->createFileName($file);
+
+                $this->originalImage($file, $fileName);
+
+                $this->thumbImage($file, $fileName, 190, 275);
+
+                $this->attributes['welcome_photo'] = $fileName;
+            }
+        } catch (\Throwable $th) {
+            $this->attributes['welcome_photo'] = $file;
+        }
+    }
+
+    public function getWelcomePhotoOriginalPathAttribute()
+    {
+        return $this->welcome_photo ? asset('uploads/images/original/' . $this->welcome_photo) : null;
+    }
+
+    public function getWelcomePhotoThumbnailPathAttribute()
+    {
+        return $this->welcome_photo ? asset('uploads/images/thumbnail/' . $this->welcome_photo) : null;
+    }
+    // Welcome Photo
 }

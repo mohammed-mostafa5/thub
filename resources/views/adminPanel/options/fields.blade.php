@@ -1,32 +1,61 @@
-<!-- Min Model Year Field -->
+
+<!-- logo Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('min_model_year', __('models/options.fields.min_model_year').':') !!}
-    {!! Form::number('min_model_year', null, ['class' => 'form-control']) !!}
+    {!! Form::label('logo', __('models/options.fields.logo').':') !!}
+
+    <br>
+    <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url({{asset('uploads/images/original/default.png')}})">
+        <div class="image-input-wrapper" style="background-image: url({{isset($option) ? asset('uploads/images/original/'. $option->logo) : ''}})"></div>
+
+        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change logo">
+            <i class="fa fa-pen icon-sm text-muted"></i>
+            <input type="file" name="logo" accept=".png, .jpg, .jpeg" />
+            <input type="hidden" name="logo_remove" />
+        </label>
+
+        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel logo">
+            <i class="ki ki-bold-close icon-xs text-muted"></i>
+        </span>
+
+        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove logo">
+            <i class="ki ki-bold-close icon-xs text-muted"></i>
+        </span>
+    </div>
 </div>
-<!-- cap_max_free_cancellation Field -->
+<div class="clearfix"></div>
+
+
+<!-- welcome_photo Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('cap_max_free_cancellation', __('models/options.fields.cap_max_free_cancellation').':') !!}
-    {!! Form::number('cap_max_free_cancellation', null, ['class' => 'form-control']) !!}
+    {!! Form::label('welcome_photo', __('models/options.fields.welcome_photo').':') !!}
+
+    <br>
+    <div class="image-input image-input-outline" id="kt_image_5" style="background-image: url({{asset('uploads/images/original/default.png')}})">
+        <div class="image-input-wrapper" style="background-image: url({{isset($option) ? asset('uploads/images/original/'. $option->welcome_photo) : ''}})"></div>
+
+        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change Welcome Photo">
+            <i class="fa fa-pen icon-sm text-muted"></i>
+            <input type="file" name="welcome_photo" accept=".png, .jpg, .jpeg" />
+            <input type="hidden" name="welcome_photo_remove" />
+        </label>
+
+        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel Welcome Photo">
+            <i class="ki ki-bold-close icon-xs text-muted"></i>
+        </span>
+
+        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove Welcome Photo">
+            <i class="ki ki-bold-close icon-xs text-muted"></i>
+        </span>
+    </div>
 </div>
-<!-- towing_max_free_cancellation Field -->
+<div class="clearfix"></div>
+
+
+
+<!-- welcome_message Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('towing_max_free_cancellation', __('models/options.fields.towing_max_free_cancellation').':') !!}
-    {!! Form::number('towing_max_free_cancellation', null, ['class' => 'form-control']) !!}
-</div>
-<!-- cap_request_fees Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('cap_request_fees', __('models/options.fields.cap_request_fees').':') !!}
-    {!! Form::number('cap_request_fees', null, ['class' => 'form-control']) !!}
-</div>
-<!-- towing_request_fees Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('towing_request_fees', __('models/options.fields.towing_request_fees').':') !!}
-    {!! Form::number('towing_request_fees', null, ['class' => 'form-control']) !!}
-</div>
-<!-- towing_min_balance Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('towing_min_balance', __('models/options.fields.towing_min_balance').':') !!}
-    {!! Form::number('towing_min_balance', null, ['class' => 'form-control']) !!}
+    {!! Form::label('welcome_message', __('models/options.fields.welcome_message').':') !!}
+    {!! Form::text('welcome_message', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

@@ -13,7 +13,7 @@
 			<div class="row">
                 <div class="col-lg-12">
                     <!--begin::Card-->
-                    <div class="card card-custom gutter-b example example-compact">
+                    {{-- <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
                             <h3 class="card-title">4GO</h3>
                         </div>
@@ -31,7 +31,7 @@
                             <p>Whether you’re in the back seat or behind the wheel, your safety is essential. We are committed to doing our part, and technology is at the heart of our approach. We partner with safety advocates and develop new technologies and systems to help improve safety and help make it easier for everyone to get around.</p>
 
                         </div>
-                    </div>
+                    </div> --}}
                     <!--end::Card-->
                 </div>
             </div>

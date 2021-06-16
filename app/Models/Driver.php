@@ -97,6 +97,24 @@ class Driver extends Authenticatable implements MustVerifyEmail, JWTSubject
     ];
 
     // Photo
+    public function setPhotoAttribute($file)
+    {
+        try {
+            if ($file) {
+
+                $fileName = $this->createFileName($file);
+
+                $this->originalImage($file, $fileName);
+
+                $this->thumbImage($file, $fileName, 190, 275);
+
+                $this->attributes['photo'] = $fileName;
+            }
+        } catch (\Throwable $th) {
+            $this->attributes['photo'] = $file;
+        }
+    }
+
     public function getPhotoOriginalPathAttribute()
     {
         return $this->photo ? asset('uploads/images/original/' . $this->photo) : null;
@@ -122,23 +140,6 @@ class Driver extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     ################################# Functions #####################################
 
-    public function setPhotoAttribute($file)
-    {
-        try {
-            if ($file) {
-
-                $fileName = $this->createFileName($file);
-
-                $this->originalImage($file, $fileName);
-
-                $this->thumbImage($file, $fileName, 190, 275);
-
-                $this->attributes['photo'] = $fileName;
-            }
-        } catch (\Throwable $th) {
-            $this->attributes['photo'] = $file;
-        }
-    }
 
 
     public function setPasswordAttribute($value)
