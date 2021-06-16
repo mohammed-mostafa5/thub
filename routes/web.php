@@ -73,14 +73,6 @@ Route::group(
             Route::resource('admins', AdminController::class);
             Route::resource('metas', MetaController::class);
 
-            Route::group(['prefix' => 'companies', 'as' => 'companies.'], function () {
-                Route::get('/', 'CompanyController@index')->name('index');
-                Route::get('/{company}', 'CompanyController@show')->name('show');
-                Route::patch('/approve/{company}', 'CompanyController@approve')->name('approve');
-                Route::patch('/reject/{company}', 'CompanyController@reject')->name('reject');
-                Route::patch('/deactivate/{company}', 'CompanyController@deactivate')->name('deactivate');
-            });
-
             Route::group(['prefix' => 'drivers', 'as' => 'drivers.'], function () {
                 Route::get('/', 'DriverController@index')->name('index');
                 Route::get('/{driver}', 'DriverController@show')->name('show');
@@ -94,10 +86,6 @@ Route::group(
                 Route::get('/{customer}', 'CustomerController@show')->name('show');
             });
 
-            // Route::resource('customers', CustomerController::class);
-            // Route::patch('customers/approve/{customer}', 'CustomerController@approve')->name('customers.approve');
-
-            Route::resource('services', ServiceController::class);
             Route::resource('socialLinks', SocialLinkController::class);
             Route::post('ckeditor/upload', 'CkeditorController@upload')->name('ckeditor.upload');
             Route::resource('information', InformationController::class);
@@ -107,17 +95,8 @@ Route::group(
             Route::resource('blogs', BlogController::class);
             Route::resource('faqCategories', FaqCategoryController::class);
             Route::resource('faqs', FaqController::class);
-
-
             Route::resource('appFeatures', AppFeatureController::class);
-            Route::resource('vehicles', VehicleController::class);
-            Route::patch('vehicles/approve/{vehicle}', 'VehicleController@approve')->name('vehicles.approve');
-
-            Route::resource('brands', BrandController::class);
-            Route::resource('trips', TripController::class);
-
-            Route::resource('brands.vehicleModels', VehicleModelController::class)->shallow();
-            Route::resource('vehicleTypes', VehicleTypeController::class);
+            Route::resource('brands', BrandController::class);       
             Route::resource('colors', ColorController::class);
 
             // Pages CRUD
@@ -126,10 +105,9 @@ Route::group(
             Route::resource('pages.images', 'imagesController')->shallow();
 
             Route::resource('options', OptionController::class);
-            Route::resource('rewards', RewardController::class);
+           
             Route::resource('notifications', NotificationController::class);
 
-            Route::resource('reasons', ReasonController::class);
             Route::resource('categories', CategoryController::class);
 
         });
