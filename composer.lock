@@ -1094,12 +1094,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ahmed127/coreui-templates.git",
-                "reference": "58670a7e842784bea4a72f0c6d0d896725b9281c"
+                "reference": "362dff3191b8c478b5d8f8e45280794e6b7e1e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ahmed127/coreui-templates/zipball/58670a7e842784bea4a72f0c6d0d896725b9281c",
-                "reference": "58670a7e842784bea4a72f0c6d0d896725b9281c",
+                "url": "https://api.github.com/repos/ahmed127/coreui-templates/zipball/362dff3191b8c478b5d8f8e45280794e6b7e1e6a",
+                "reference": "362dff3191b8c478b5d8f8e45280794e6b7e1e6a",
                 "shasum": ""
             },
             "require": {
@@ -1147,7 +1147,7 @@
                     "url": "https://opencollective.com/infyomlabs"
                 }
             ],
-            "time": "2021-04-15T12:22:00+00:00"
+            "time": "2021-06-20T13:44:29+00:00"
         },
         {
             "name": "infyomlabs/generator-builder",
@@ -8670,5 +8670,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

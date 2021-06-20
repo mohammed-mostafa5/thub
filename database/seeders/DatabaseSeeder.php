@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             BrandTableSeeder::class,
             ColorTableSeeder::class,
             // VehicleTypeTableSeeder::class,
-            // CustomerTableSeeder::class,
+            UserTableSeeder::class,
             // CompanyTableSeeder::class,
             // DriverTableSeeder::class,
             // VehicleTableSeeder::class,
