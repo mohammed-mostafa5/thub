@@ -93,7 +93,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @endif
     <!--end::Layout Themes-->
 
-    <link rel="shortcut icon" href="{{asset('img/4go-white.png')}}" />
+    <link rel="shortcut icon" href="{{\App\Models\Option::first()->fav_icon_thumbnail_path}}" />
 
 
     {{-- ckeditor --}}

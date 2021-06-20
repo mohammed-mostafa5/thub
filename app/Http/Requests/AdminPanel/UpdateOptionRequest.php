@@ -25,8 +25,11 @@ class UpdateOptionRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Option::$rules;
-        
+        $rules                  = Option::$rules;
+        $rules['logo']          = 'nullable';
+        $rules['fav_icon']      = 'nullable';
+        $rules['welcome_photo'] = 'nullable';
+
         return $rules;
     }
 }

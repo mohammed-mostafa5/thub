@@ -21,8 +21,9 @@
                     <div class="card-header">
                         <h3 class="card-title">Edit @lang('models/options.singular')</h3>
                     </div>
+                    {{-- <form enctype="multipart/form-data"> --}}
                     <div class="card-body">
-                        {!! Form::model($option, ['route' => ['adminPanel.options.update', $option->id], 'method' => 'patch']) !!}
+                        {!! Form::model($option, ['route' => ['adminPanel.options.update', $option->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) !!}
                         @include('adminPanel.options.fields')
                         {!! Form::close() !!}
                     </div>
