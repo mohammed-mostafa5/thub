@@ -118,3 +118,8 @@ Route::group(
 ///								End admin panel routes 					///
 ///////////////////////////////////////////////////////////////////////////
 
+
+
+Route::group(['prefix' => 'adminPanel'], function () {
+    Route::resource('states', App\Http\Controllers\AdminPanel\StateController::class, ["as" => 'adminPanel']);
+});
