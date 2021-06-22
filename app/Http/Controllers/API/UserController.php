@@ -46,7 +46,6 @@ class UserController extends Controller
     public function wallet()
     {
         $user = auth('api')->user();
-
         $balance = $user->balance;
 
         return response()->json(compact('balance'));

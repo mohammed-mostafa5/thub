@@ -96,7 +96,7 @@ Route::group(
             Route::resource('faqCategories', FaqCategoryController::class);
             Route::resource('faqs', FaqController::class);
             Route::resource('appFeatures', AppFeatureController::class);
-            Route::resource('brands', BrandController::class);       
+            Route::resource('brands', BrandController::class);
             Route::resource('colors', ColorController::class);
 
             // Pages CRUD
@@ -105,11 +105,11 @@ Route::group(
             Route::resource('pages.images', 'imagesController')->shallow();
 
             Route::resource('options', OptionController::class);
-           
+
             Route::resource('notifications', NotificationController::class);
 
             Route::resource('categories', CategoryController::class);
-
+            Route::resource('states', StateController::class);
         });
     }
 );
@@ -117,9 +117,3 @@ Route::group(
 ///////////////////////////////////////////////////////////////////////////
 ///								End admin panel routes 					///
 ///////////////////////////////////////////////////////////////////////////
-
-
-
-Route::group(['prefix' => 'adminPanel'], function () {
-    Route::resource('states', App\Http\Controllers\AdminPanel\StateController::class, ["as" => 'adminPanel']);
-});

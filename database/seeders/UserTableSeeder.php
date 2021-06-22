@@ -14,16 +14,25 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+
+        DB::table('customers')->insert([
             [
                 'name'              => 'Ahmed',
-                'phone'             => '01077777777',
-                'address'           => 'Egypt, Cairo',
             ],
             [
                 'name'              => 'Nabil',
+            ],
+        ]);
+        DB::table('users')->insert([
+            [
+                'phone'                     => '01077777777',
+                'userable_id'               => 1,
+                'userable_type'             => '\App\Models\Customer',
+            ],
+            [
                 'phone'             => '01055555555',
-                'address'           => 'Egypt, Cairo',
+                'userable_id'               => 2,
+                'userable_type'             => '\App\Models\Customer',
             ],
         ]);
     }

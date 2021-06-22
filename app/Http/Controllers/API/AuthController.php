@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Mail\RegistrationMail;
 use App\Helpers\HelperFunctionTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
@@ -25,7 +26,12 @@ class AuthController extends Controller
         $phone = $request->validate(['phone' => 'required|numeric']);
 
         $user = User::where($phone)->firstOr(function () {
-            return User::create(['phone' => request('phone')]);
+            $customer = Customer::create();
+            return User::create([
+                'phone' => request('phone'),
+                'userable_id' => $customer->id,
+                'userable_type' => "\App\Models\Customer",
+            ]);
         });
 
         $user->update(['verify_code' => $this->randomCode(4)]);

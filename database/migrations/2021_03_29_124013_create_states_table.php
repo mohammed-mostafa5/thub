@@ -19,6 +19,18 @@ class CreateStatesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('state_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('state_id')->unsigned();
+            $table->string('locale', 2)->index();
+
+            $table->string('name');
+
+            $table->unique(['state_id', 'locale']);
+
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+        });
     }
 
     /**

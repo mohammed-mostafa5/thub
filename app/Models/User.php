@@ -22,11 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'email',
         'phone',
         'address',
-        'housing_type',
-        'state_id',
-        'building_number',
-        'floor_number',
-        'apartment_number',
+        'userable_id',
+        'userable_type',
         'status',
         'verify_code',
         'balance',
@@ -88,5 +85,13 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+
+    ####################### Relations #########################
+
+    public function userable()
+    {
+        $this->morphTo();
     }
 }

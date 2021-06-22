@@ -15,23 +15,15 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('address')->nullable();
+            $table->unsignedInteger('userable_id')->nullable();
+            $table->string('userable_type')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
-            $table->unsignedInteger('state_id')->nullable();
-            $table->string('house_number')->nullable();
-            $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
-            $table->string('apartment_number')->nullable();
-            $table->string('balance')->default(0);
             $table->string('verify_code')->nullable();
-            $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active, 2 => New');
+            $table->string('balance')->default(0);
+            $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
 
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
     }
 
