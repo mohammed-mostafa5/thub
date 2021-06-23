@@ -25,16 +25,8 @@ class State extends Model
 
 
 
-    public $fillable = [];
+    public $fillable = ['id'];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer'
-    ];
 
     public $translatedAttributes = ['name'];
 

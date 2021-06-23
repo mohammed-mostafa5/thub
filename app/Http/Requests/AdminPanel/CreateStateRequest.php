@@ -25,6 +25,6 @@ class CreateStateRequest extends FormRequest
      */
     public function rules()
     {
-        return State::$rules;
+        return State::rules();
     }
 }

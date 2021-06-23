@@ -28,6 +28,11 @@ Route::post('send-contact', 'MainController@send_contact_message');
 Route::post('newsletter', 'MainController@newsletter');
 Route::get('landing-page', 'MainController@landing_page');
 
+
+
+Route::get('states', 'MainController@states');
+Route::get('donation-types', 'MainController@donation_types');
+
 // Auth
 Route::post('customer/login', 'AuthController@login_or_register_customer');
 Route::post('customer/verify-code', 'AuthController@verify_code_customer');

@@ -9,10 +9,14 @@ use App\Models\Page;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Brand;
+use App\Models\Color;
+use App\Models\State;
 use App\Models\Driver;
+use App\Models\Reason;
 use App\Models\Slider;
 use App\Models\Contact;
 use App\Models\Service;
+use App\Models\Category;
 use App\Models\AppFeature;
 use App\Models\Newsletter;
 use App\Models\SocialLink;
@@ -21,9 +25,7 @@ use App\Models\Information;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Reason;
+use App\Models\DonationType;
 use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
@@ -35,60 +37,28 @@ class MainController extends Controller
 
     ##########################################################################
 
-    // Authentication
-
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['msg' => __('lang.wrongCredential')], 401);
-        } else {
-            $user = auth('api')->user();
-            if ($user->status == 'Inactive') {
-                return response()->json(['msg' => __('lang.notActive')], 403);
-            }
-            if (!$user->approved_at) {
-                return response()->json(['msg' => __('lang.notApproved')], 403);
-            }
-        }
-
-        $user = auth('api')->user();
-
-        return response()->json(compact('user', 'token'));
-    }
-
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'address' => 'required',
-            'identification' => 'nullable|image',
-        ]);
-        $validated['code'] = strtoupper($request->first_name[0]) . strtoupper($request->last_name[0]) .  $this->randomCode(4);
-        $user = User::create($validated);
-
-        return response()->json(['msg' => 'ok']);
-    }
-
-
-    public function logout()
-    {
-        auth('api')->logout();
-
-        return response()->json(['msg' => __('lang.logoutMsg')]);
-    }
-
-    ##########################################################################
-
     // General
+
+    public function states()
+    {
+        $states = State::get();
+
+        return response()->json(compact('states'));
+    }
+
+    public function donation_types()
+    {
+        $donation_types = DonationType::get();
+
+        return response()->json(compact('donation_types'));
+    }
+
+
+
+
+
+
+
 
     public function brands()
     {

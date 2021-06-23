@@ -92,6 +92,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     public function userable()
     {
-        $this->morphTo();
+        return $this->morphTo();
     }
 }

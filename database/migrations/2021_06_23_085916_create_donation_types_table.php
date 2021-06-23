@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatesTable extends Migration
+class CreateDonationTypesTable extends Migration
 {
 
     /**
@@ -14,22 +14,24 @@ class CreateStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('donation_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('icon');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('state_translations', function (Blueprint $table) {
+
+        Schema::create('donation_type_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('state_id')->unsigned();
+            $table->integer('donation_type_id')->unsigned();
             $table->string('locale', 2)->index();
 
             $table->string('name');
 
-            $table->unique(['state_id', 'locale']);
+            $table->unique(['donation_type_id', 'locale']);
 
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->foreign('donation_type_id')->references('id')->on('donation_types')->onDelete('cascade');
         });
     }
 
@@ -40,7 +42,7 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('state_translations');
-        Schema::drop('states');
+        Schema::drop('donation_type_translations');
+        Schema::drop('donation_types');
     }
 }

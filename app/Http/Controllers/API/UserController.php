@@ -18,7 +18,7 @@ class UserController extends Controller
     }
 
     ##################################################################
-    # Main
+    # Dashboard
     ##################################################################
 
     public function update_information(Request $request)
@@ -26,19 +26,16 @@ class UserController extends Controller
         $user = auth('api')->user();
         $data = $request->validate([
             'name'              => 'required|string|max:191',
-            'phone'             => 'required|string|max:191',
             'address'           => 'nullable|string|max:191',
             'housing_type'      => 'nullable|in:1,2',
             'state_id'          => 'nullable',
             'building_number'   => 'nullable',
             'floor_number'      => 'nullable',
             'apartment_number'  => 'nullable',
-            'status'            => 'nullable',
-            'verify_code'       => 'nullable',
-            'balance'           => 'nullable',
         ]);
 
-        $user->update($data);
+        $user->userable()->update($data);
+        $user->load('userable');
 
         return response()->json(compact('user'));
     }
@@ -51,7 +48,22 @@ class UserController extends Controller
         return response()->json(compact('balance'));
     }
 
-    //------------------------- End Main --------------------------//
+
+
+    //------------------------- End Dashboard --------------------------//
+
+
+
+    ##################################################################
+    # Donation
+    ##################################################################
+
+    public function make_donation()
+    {
+        # code...
+    }
+
+    //--------------------- End Donation -----------------------//
 
 
 
@@ -110,6 +122,9 @@ class UserController extends Controller
     }
 
     //--------------------- End Rates -----------------------//
+
+
+
 
 
 

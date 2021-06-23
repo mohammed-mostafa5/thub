@@ -3,9 +3,9 @@
 namespace App\Http\Requests\AdminPanel;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\State;
+use App\Models\DonationType;
 
-class UpdateStateRequest extends FormRequest
+class UpdateDonationTypeRequest extends FormRequest
 {
 
     /**
@@ -25,7 +25,7 @@ class UpdateStateRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = State::rules();
+        $rules = DonationType::rules();
 
         return $rules;
     }

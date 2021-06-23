@@ -44,16 +44,15 @@ class AuthController extends Controller
     {
         $inputs = $request->validate(['phone' => 'required|numeric', 'verify_code' => 'required|min:4|max:5']);
 
-        $user = User::firstWhere($inputs);
+        $data['user'] = User::firstWhere($inputs);
 
-        if (empty($user)) {
+        if (empty($data['user'])) {
             return response()->json(['msg' => 'Verify code is not correct'], 403);
         }
-        // dd($user->id);
-        $token = auth('api')->tokenById($user->id);
-        // $token = auth('api')->attempt($inputs);
+        $data['user']->load('userable');
+        $data['token'] = auth('api')->tokenById($data['user']->id);
 
-        return response()->json(compact('user', 'token'));
+        return response()->json($data);
     }
 
     // End user

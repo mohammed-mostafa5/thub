@@ -110,6 +110,7 @@ Route::group(
 
             Route::resource('categories', CategoryController::class);
             Route::resource('states', StateController::class);
+            Route::resource('donationTypes', DonationTypeController::class);
         });
     }
 );
