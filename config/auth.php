@@ -48,26 +48,9 @@ return [
 
 
         'api' => [
-            'company' => [
-                'driver' => 'jwt',
-                'provider' => 'company',
-                'hash' => false,
-            ],
-
-            'driver' => [
-                'driver' => 'jwt',
-                'provider' => 'driver',
-                'hash' => false,
-            ],
-
-            'customer' => [
-                'driver' => 'jwt',
-                'provider' => 'customer',
-                'hash' => false,
-            ],
-            // 'driver' => 'jwt',
-            // 'provider' => 'customer',
-            // 'hash' => false,
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
         ],
     ],
 
@@ -93,22 +76,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        'customer' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Customer::class,
-        ],
-
-        'driver' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Driver::class,
-        ],
-
-        'company' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Company::class,
-        ],
-
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,

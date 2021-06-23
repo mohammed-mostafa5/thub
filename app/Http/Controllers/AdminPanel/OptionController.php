@@ -121,7 +121,47 @@ class OptionController extends AppBaseController
             return redirect(route('adminPanel.options.index'));
         }
 
+        // Define Currunt fav_icon Path
+        $fav_icon = "uploads/images/original/$option->fav_icon";
+        $fav_icon_thumbnail = "uploads/images/thumbnail/$option->fav_icon";
+        // Define Currunt logo Path
+        $logo = "uploads/images/original/$option->logo";
+        $logo_thumbnail = "uploads/images/thumbnail/$option->logo";
+        // Define Currunt welcome_photo Path
+        $welcome_photo = "uploads/images/original/$option->welcome_photo";
+        $welcome_photo_thumbnail = "uploads/images/thumbnail/$option->welcome_photo";
+
         $option = $this->optionRepository->update($request->all(), $id);
+
+        if ($request->fav_icon) {
+            // Deleting Current fav_icon
+            if (file_exists($fav_icon)) {
+                unlink(public_path($fav_icon));
+            }
+            if (file_exists($fav_icon_thumbnail)) {
+                unlink(public_path($fav_icon_thumbnail));
+            }
+        }
+
+        if ($request->logo) {
+            // Deleting Current logo
+            if (file_exists($logo)) {
+                unlink(public_path($logo));
+            }
+            if (file_exists($logo_thumbnail)) {
+                unlink(public_path($logo_thumbnail));
+            }
+        }
+
+        if ($request->welcome_photo) {
+            // Deleting Current welcome_photo
+            if (file_exists($welcome_photo)) {
+                unlink(public_path($welcome_photo));
+            }
+            if (file_exists($welcome_photo_thumbnail)) {
+                unlink(public_path($welcome_photo_thumbnail));
+            }
+        }
 
         Flash::success(__('messages.updated', ['model' => __('models/options.singular')]));
 
@@ -148,6 +188,44 @@ class OptionController extends AppBaseController
         }
 
         $this->optionRepository->delete($id);
+
+        // Define Currunt fav_icon Path
+        $fav_icon = "uploads/images/original/$option->fav_icon";
+        $fav_icon_thumbnail = "uploads/images/thumbnail/$option->fav_icon";
+
+        // Define Currunt logo Path
+        $logo = "uploads/images/original/$option->logo";
+        $logo_thumbnail = "uploads/images/thumbnail/$option->logo";
+
+        // Define Currunt welcome_photo Path
+        $welcome_photo = "uploads/images/original/$option->welcome_photo";
+        $welcome_photo_thumbnail = "uploads/images/thumbnail/$option->welcome_photo";
+
+        // Deleting Current fav_icon
+        if (file_exists($fav_icon)) {
+            unlink(public_path($fav_icon));
+        }
+        if (file_exists($fav_icon_thumbnail)) {
+            unlink(public_path($fav_icon_thumbnail));
+        }
+
+        // Deleting Current logo
+        if (file_exists($logo)) {
+            unlink(public_path($logo));
+        }
+        if (file_exists($logo_thumbnail)) {
+            unlink(public_path($logo_thumbnail));
+        }
+
+        // Deleting Current welcome_photo
+        if (file_exists($welcome_photo)) {
+            unlink(public_path($welcome_photo));
+        }
+        if (file_exists($welcome_photo_thumbnail)) {
+            unlink(public_path($welcome_photo_thumbnail));
+        }
+
+
 
         Flash::success(__('messages.deleted', ['model' => __('models/options.singular')]));
 

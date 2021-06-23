@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Translatable;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,19 +15,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class State extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Translatable;
 
 
     public $table = 'states';
-    
+
 
     protected $dates = ['deleted_at'];
 
 
 
-    public $fillable = [
-        
-    ];
+    public $fillable = [];
 
     /**
      * The attributes that should be casted to native types.
@@ -37,14 +36,16 @@ class State extends Model
         'id' => 'integer'
     ];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        
-    ];
+    public $translatedAttributes = ['name'];
 
-    
+    public static function rules()
+    {
+        $languages = array_keys(config('langs'));
+
+        foreach ($languages as $language) {
+            $rules[$language . '.name'] = 'required|string|max:191';
+        }
+
+        return $rules;
+    }
 }

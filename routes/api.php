@@ -47,13 +47,24 @@ Route::get('cancel-request-reasons', 'MainController@cancelRequestReasons');
 ///////////////////////////////// End Page ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-Route::group(['middleware' => ['auth:api.customer']], function () {
 
-    Route::post('logout', 'CustomerController@logout')->name('users.logout');
 
-    Route::post('update-customer-information', 'CustomerController@update_information');
-    Route::get('customer-wallet', 'CustomerController@wallet');
-    Route::post('customer-add-or-update-rate', 'CustomerController@addOrUpdateRate');
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Start Customer ///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+// Auth
+Route::post('user/login', 'AuthController@login_or_register_user');
+Route::post('user/verify-code', 'AuthController@verify_code_user');
+
+
+Route::group(['middleware' => ['auth:api']], function () {
+
+    Route::post('logout', 'AuthController@logout')->name('users.logout');
+
+    Route::post('user-update-information', 'UserController@update_information');
+    Route::post('user-add-or-update-rate', 'UserController@addOrUpdateRate');
+    Route::get('user-wallet', 'UserController@wallet');
 });
 
 //////////////////////////////////////////////////////////////////////////////
