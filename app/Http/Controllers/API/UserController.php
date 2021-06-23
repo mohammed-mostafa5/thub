@@ -8,6 +8,8 @@ use App\Models\CustomerRate;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Donation;
+use App\Models\DonationPhoto;
 
 class UserController extends Controller
 {
@@ -58,9 +60,46 @@ class UserController extends Controller
     # Donation
     ##################################################################
 
-    public function make_donation()
+    public function donate()
     {
-        # code...
+        $customer = auth('api')->user()->userable;
+        $data = request()->validate([
+            'name'              => 'required|string|max:191',
+            'address'           => 'required|string|max:191',
+            'state_id'          => 'required|exists:states,id',
+            'housing_type'      => 'required|in:1,2',
+            'house_number'      => 'nullable|numeric',
+            'building_number'   => 'nullable|numeric',
+            'floor_number'      => 'nullable|numeric',
+            'apartment_number'  => 'nullable|numeric',
+            'pickup_date'       => 'required|date',
+            'photos*'           => 'required|array',
+            'photos'            => 'required|mimes:png,jpg,jpeg',
+        ]);
+        $data['customer_id'] = $customer->id();
+
+        $customer->update([
+            'name'              => $data['name'],
+            'address'           => $data['address'],
+            'state_id'          => $data['state_id'],
+            'housing_type'      => $data['housing_type'],
+            'house_number'      => $data['house_number'],
+            'building_number'   => $data['building_number'],
+            'floor_number'      => $data['floor_number'],
+            'apartment_number'  => $data['apartment_number'],
+        ]);
+        $donation = Donation::create([
+            'pickup_date'       => $data['pickup_date'],
+        ]);
+
+        foreach ($data['photos'] as $photo) {
+            DonationPhoto::create([
+                'donation_id'   => $donation->id,
+                'photo'         => $photo,
+            ]);
+        }
+
+        return response()->json($data);
     }
 
     //--------------------- End Donation -----------------------//

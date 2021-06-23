@@ -32,6 +32,29 @@ class CreateCustomersTable extends Migration
 
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
+
+        Schema::create('customer_donations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('customer_id')->nullable();
+            $table->dateTime('pickup_date')->nullable();
+            $table->unsignedTinyInteger('status')->default(1)->comment('0 => New, 1 => Active');
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+        });
+
+        Schema::create('donation_photos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('donation_id')->nullable();
+            $table->string('photo')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('donation_id')->references('id')->on('customer_donations')->onDelete('cascade');
+        });
     }
 
     /**
@@ -41,6 +64,8 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
+        Schema::drop('donation_photos');
+        Schema::drop('customer_donations');
         Schema::drop('customers');
     }
 }

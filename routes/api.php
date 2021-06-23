@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('logout', 'AuthController@logout')->name('users.logout');
 
     Route::post('user-update-information', 'UserController@update_information');
+    Route::post('donate', 'UserController@donate');
     Route::post('user-add-or-update-rate', 'UserController@addOrUpdateRate');
     Route::get('user-wallet', 'UserController@wallet');
 });
