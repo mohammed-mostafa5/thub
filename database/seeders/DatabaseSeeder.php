@@ -21,17 +21,11 @@ class DatabaseSeeder extends Seeder
             PageTableSeeder::class,
             InformationTableSeeder::class,
             SocialLinkTableSeeder::class,
-            // ServiceTableSeeder::class,
-            // AppFeatureTableSeeder::class,
             BrandTableSeeder::class,
             ColorTableSeeder::class,
-            // VehicleTypeTableSeeder::class,
             UserTableSeeder::class,
             StateTableSeeder::class,
-            // CompanyTableSeeder::class,
-            // DriverTableSeeder::class,
-            // VehicleTableSeeder::class,
-            // TripTableSeeder::class,
+            DonationTypeTableSeeder::class,
         ]);
     }
 }

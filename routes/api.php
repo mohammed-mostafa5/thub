@@ -67,10 +67,12 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::post('logout', 'AuthController@logout')->name('users.logout');
 
-    Route::post('user-update-information', 'UserController@update_information');
-    Route::post('donate', 'UserController@donate');
-    Route::post('user-add-or-update-rate', 'UserController@addOrUpdateRate');
-    Route::get('user-wallet', 'UserController@wallet');
+    Route::post('customer-update-information', 'CustomerController@update_information');
+    Route::post('customer-update-phone', 'CustomerController@update_phone');
+    Route::post('customer-verify-phone', 'CustomerController@verify_phone');
+    Route::post('donate', 'CustomerController@donate');
+    Route::post('customer-add-or-update-rate', 'CustomerController@addOrUpdateRate');
+    Route::get('customer-wallet', 'CustomerController@wallet');
 });
 
 //////////////////////////////////////////////////////////////////////////////

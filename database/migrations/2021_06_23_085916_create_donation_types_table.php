@@ -33,6 +33,31 @@ class CreateDonationTypesTable extends Migration
 
             $table->foreign('donation_type_id')->references('id')->on('donation_types')->onDelete('cascade');
         });
+
+
+
+        Schema::create('donation_photos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('donation_id')->nullable();
+            $table->string('photo')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('donation_id')->references('id')->on('customer_donations')->onDelete('cascade');
+        });
+
+        Schema::create('type_of_donations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('donation_id')->nullable();
+            $table->unsignedInteger('donation_type_id')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('donation_id')->references('id')->on('customer_donations')->onDelete('cascade');
+            $table->foreign('donation_type_id')->references('id')->on('donation_types')->onDelete('cascade');
+        });
     }
 
     /**
@@ -42,6 +67,8 @@ class CreateDonationTypesTable extends Migration
      */
     public function down()
     {
+        Schema::drop('type_of_donations');
+        Schema::drop('donation_photos');
         Schema::drop('donation_type_translations');
         Schema::drop('donation_types');
     }

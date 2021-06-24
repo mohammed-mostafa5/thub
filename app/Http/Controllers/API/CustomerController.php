@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
 use App\Models\Option;
+use App\Models\Donation;
 use App\Models\DriverRate;
 use App\Models\CustomerRate;
 use App\Models\Notification;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Donation;
 use App\Models\DonationPhoto;
+use App\Models\TypeOfDonation;
+use App\Helpers\HelperFunctionTrait;
+use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class CustomerController extends Controller
 {
+    use HelperFunctionTrait;
 
     public function test()
     {
@@ -40,6 +44,34 @@ class UserController extends Controller
         $user->load('userable');
 
         return response()->json(compact('user'));
+    }
+
+    public function update_phone(Request $request)
+    {
+        $user = auth('api')->user();
+
+        $user->update(['verify_code' => $this->randomCode(4)]);
+
+        return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $user->verify_code]);
+    }
+
+    public function verify_phone(Request $request)
+    {
+        $request->validate([
+            'phone'         => 'required|numeric|unique:users,phone',
+            'verify_code'   => 'required|min:4|max:5'
+        ]);
+
+        $user = User::where(['phone' => auth()->user()->phone, 'verify_code'   => $request->verify_code])->first();
+
+        if (empty($user)) {
+            return response()->json(['msg' => 'Verify code is not correct'], 403);
+        }
+
+        $user->update(['phone' => $request->phone]);
+        // $user->load('userable');
+
+        return response()->json(['msg' => 'Your Phone Updated Successfuly']);
     }
 
     public function wallet()
@@ -73,24 +105,51 @@ class UserController extends Controller
             'floor_number'      => 'nullable|numeric',
             'apartment_number'  => 'nullable|numeric',
             'pickup_date'       => 'required|date',
-            'photos*'           => 'required|array',
-            'photos'            => 'required|mimes:png,jpg,jpeg',
+            'photos'            => 'nullable|array',
+            'photos.*'          => 'nullable|image|mimes:png,jpg,jpeg',
+            'donation_types'    => 'nullable|array',
+            'donation_types.*'  => 'nullable|exists:donation_types,id',
         ]);
-        $data['customer_id'] = $customer->id();
 
-        $customer->update([
-            'name'              => $data['name'],
-            'address'           => $data['address'],
-            'state_id'          => $data['state_id'],
-            'housing_type'      => $data['housing_type'],
-            'house_number'      => $data['house_number'],
-            'building_number'   => $data['building_number'],
-            'floor_number'      => $data['floor_number'],
-            'apartment_number'  => $data['apartment_number'],
-        ]);
-        $donation = Donation::create([
-            'pickup_date'       => $data['pickup_date'],
-        ]);
+        $data['customer_id'] = $customer->id;
+
+        if ($customer->donations->count() > 0) {
+            $donation = Donation::create([
+                'name'              => $data['name'],
+                'state_id'          => $data['state_id'],
+                'housing_type'      => $data['housing_type'],
+                'house_number'      => $data['house_number'] ?? null,
+                'building_number'   => $data['building_number'] ?? null,
+                'floor_number'      => $data['floor_number'] ?? null,
+                'apartment_number'  => $data['apartment_number'] ?? null,
+                'customer_id'       => $data['customer_id'],
+                'address'           => $data['address'],
+                'pickup_date'       => $data['pickup_date'],
+            ]);
+        } else {
+            $customer->update([
+                'name'              => $data['name'],
+                'state_id'          => $data['state_id'],
+                'address'           => $data['address'],
+                'housing_type'      => $data['housing_type'],
+                'house_number'      => $data['house_number'] ?? null,
+                'building_number'   => $data['building_number'] ?? null,
+                'floor_number'      => $data['floor_number'] ?? null,
+                'apartment_number'  => $data['apartment_number'] ?? null,
+            ]);
+            $donation = Donation::create([
+                'name'              => $data['name'],
+                'state_id'          => $data['state_id'],
+                'address'           => $data['address'],
+                'housing_type'      => $data['housing_type'],
+                'house_number'      => $data['house_number'] ?? null,
+                'building_number'   => $data['building_number'] ?? null,
+                'floor_number'      => $data['floor_number'] ?? null,
+                'apartment_number'  => $data['apartment_number'] ?? null,
+                'customer_id'       => $data['customer_id'],
+                'pickup_date'       => $data['pickup_date'],
+            ]);
+        }
 
         foreach ($data['photos'] as $photo) {
             DonationPhoto::create([
@@ -98,8 +157,16 @@ class UserController extends Controller
                 'photo'         => $photo,
             ]);
         }
+        foreach ($data['donation_types'] as $donation_type) {
+            TypeOfDonation::create([
+                'donation_id'           => $donation->id,
+                'donation_type_id'      => $donation_type,
+            ]);
+        }
 
-        return response()->json($data);
+        $customer->load('donations.photos', 'donations.types.donationType');
+
+        return response()->json($customer);
     }
 
     //--------------------- End Donation -----------------------//

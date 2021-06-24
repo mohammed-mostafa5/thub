@@ -32,6 +32,7 @@ class Customer extends Model
         'name',
         'address',
         'housing_type',
+        'house_number',
         'state_id',
         'building_number',
         'floor_number',
@@ -55,5 +56,10 @@ class Customer extends Model
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
+    }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'customer_id', 'id');
     }
 }
