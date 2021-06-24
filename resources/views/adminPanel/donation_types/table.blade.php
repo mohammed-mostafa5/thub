@@ -23,9 +23,9 @@
                     @can('donationTypes edit')
                     <a href="{{ route('adminPanel.donationTypes.edit', [$donationType->id]) . '?languages=' . \App::getLocale() }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan
-                    @can('donationTypes destroy')
+                    {{-- @can('donationTypes destroy')
                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
-                    @endcan
+                    @endcan --}}
                 </div>
                 {!! Form::close() !!}
             </td>
