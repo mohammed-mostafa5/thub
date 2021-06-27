@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\State;
 use App\Models\Driver;
+use App\Models\Option;
 use App\Models\Reason;
 use App\Models\Slider;
 use App\Models\Contact;
@@ -23,9 +24,9 @@ use App\Models\SocialLink;
 use App\Models\FaqCategory;
 use App\Models\Information;
 use App\Models\VehicleType;
+use App\Models\DonationType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\DonationType;
 use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
@@ -52,6 +53,14 @@ class MainController extends Controller
 
         return response()->json(compact('donation_types'));
     }
+
+    public function options()
+    {
+        $options = Option::first();
+
+        return response()->json(compact('options'));
+    }
+
 
 
 

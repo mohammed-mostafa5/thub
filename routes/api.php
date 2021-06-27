@@ -30,6 +30,7 @@ Route::get('landing-page', 'MainController@landing_page');
 
 
 
+Route::get('options', 'MainController@options');
 Route::get('states', 'MainController@states');
 Route::get('donation-types', 'MainController@donation_types');
 
@@ -45,8 +46,6 @@ Route::get('driver-rate/{driverRate}', 'DriverController@rate');
 Route::get('customer-rates/{customerId}', 'CustomerController@rates');
 Route::get('customer-rate/{customerRate}', 'CustomerController@rate');
 
-Route::get('cancel-trip-reasons', 'MainController@cancelTripReasons');
-Route::get('cancel-request-reasons', 'MainController@cancelRequestReasons');
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// End Page ///////////////////////////////////
