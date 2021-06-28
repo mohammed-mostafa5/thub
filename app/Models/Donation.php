@@ -32,8 +32,24 @@ class Donation extends Model
     {
         return $this->hasMany(DonationPhoto::class);
     }
+
     public function types()
     {
         return $this->hasMany(TypeOfDonation::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 }

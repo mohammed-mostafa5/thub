@@ -17,16 +17,18 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('phone')->unique();
-            $table->string('photo')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('address')->nullable();
-            $table->string('verify_code')->nullable();
-            $table->unsignedTinyInteger('status')->default(0)->comment('0 => Inactive, 1 => Active');
+            $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
+            $table->unsignedInteger('state_id')->nullable();
+            $table->string('house_number')->nullable();
+            $table->string('building_number')->nullable();
+            $table->string('floor_number')->nullable();
+            $table->string('apartment_number')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
     }
 

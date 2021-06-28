@@ -25,7 +25,7 @@ class CreateCustomersTable extends Migration
             $table->string('floor_number')->nullable();
             $table->string('apartment_number')->nullable();
 
-            $table->rememberToken();
+            // $table->rememberToken();
 
             $table->timestamps();
             $table->softDeletes();
@@ -36,6 +36,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customer_donations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('customer_id')->nullable();
+            $table->unsignedInteger('driver_id')->nullable();
             $table->dateTime('pickup_date')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
@@ -51,6 +52,7 @@ class CreateCustomersTable extends Migration
             $table->softDeletes();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
         });
     }
 

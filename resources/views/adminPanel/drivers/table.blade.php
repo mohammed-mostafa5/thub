@@ -15,11 +15,9 @@
                         <select class="form-control" id="kt_datatable_search_status">
                             {{-- 0 => in progress, 1 => Pending, 2 => Approved, 3 => Rejected, 4 => Deactivate --}}
                             <option value="">@lang('lang.all')</option>
-                            <option value="0">@lang('lang.in_progress')</option>
-                            <option value="1">@lang('lang.pending')</option>
-                            <option value="2">@lang('lang.approved')</option>
-                            <option value="3">@lang('lang.rejected')</option>
-                            <option value="4">@lang('lang.deactivate')</option>
+                            <option value="0">@lang('lang.inactive')</option>
+                            <option value="1">@lang('lang.active')</option>
+
                         </select>
                     </div>
                 </div>
@@ -35,8 +33,8 @@
         <tr>
             <th>@lang('models/drivers.fields.name')</th>
             <th>@lang('models/drivers.fields.phone')</th>
-            <th>@lang('models/drivers.fields.email')</th>
-            <th>@lang('models/drivers.fields.company_id')</th>
+            <th>@lang('models/drivers.fields.verify_code')</th>
+            <th>@lang('models/drivers.fields.state')</th>
             <th>@lang('models/drivers.fields.status')</th>
             <th>@lang('crud.action')</th>
         </tr>
@@ -45,18 +43,11 @@
         @foreach($drivers as $driver)
         <tr>
             <td>{{ $driver->name }}</td>
-            <td>{{ $driver->phone }}</td>
-            <td>{{ $driver->email }}</td>
-            <td>
-                @if ($driver->company_id != null)
-                <a href="{{ route('adminPanel.companies.show', [$driver->company_id]) }}">
-                    {{ $driver->company->company_name }}
-                </a>
-                @else
-                @lang('models/drivers.fields.independent')
-                @endif
-            </td>
-            <td>{{ $driver->status }}</td>
+            <td>{{ $driver->user->phone ?? '' }}</td>
+            <td>{{ $driver->user->verify_code ?? '' }}</td>
+            <td>{{ $driver->state->name ?? '' }}</td>
+
+            <td>{{ $driver->user->status }}</td>
             <td nowrap>
                 <div class='btn btn-sm-group'>
                     <a href="{{ route('adminPanel.drivers.show', [$driver->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
@@ -67,5 +58,3 @@
     </tbody>
 </table>
 <!--end: Datatable-->
-
-

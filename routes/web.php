@@ -73,17 +73,19 @@ Route::group(
             Route::resource('admins', AdminController::class);
             Route::resource('metas', MetaController::class);
 
-            Route::group(['prefix' => 'drivers', 'as' => 'drivers.'], function () {
-                Route::get('/', 'DriverController@index')->name('index');
-                Route::get('/{driver}', 'DriverController@show')->name('show');
-                Route::patch('/approve/{driver}', 'DriverController@approve')->name('approve');
-                Route::patch('/reject/{driver}', 'DriverController@reject')->name('reject');
-                Route::patch('/deactivate/{driver}', 'DriverController@deactivate')->name('deactivate');
-            });
+            Route::resource('drivers', DriverController::class);
+            Route::patch('/deactivate/{driver}', 'DriverController@deactivate')->name('drivers.deactivate');
+
 
             Route::prefix('customers')->as('customers.')->group(function () {
                 Route::get('/', 'CustomerController@index')->name('index');
                 Route::get('/{customer}', 'CustomerController@show')->name('show');
+            });
+
+            Route::prefix('donations')->as('donations.')->group(function () {
+                Route::get('/', 'DonationController@index')->name('index');
+                Route::get('/{donation}', 'DonationController@show')->name('show');
+                Route::patch('/{donation}', 'DonationController@assign_driver')->name('assign_driver');
             });
 
             Route::resource('socialLinks', SocialLinkController::class);
