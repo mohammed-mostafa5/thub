@@ -21,7 +21,7 @@
                         <h3 class="card-title">Edit @lang('models/drivers.singular')</h3>
                     </div>
                     <div class="card-body">
-                        {!! Form::model($vehicleType, ['route' => ['adminPanel.drivers.update', $vehicleType->id], 'method' => 'patch']) !!}
+                        {!! Form::model($driver, ['route' => ['adminPanel.drivers.update', $driver->id], 'method' => 'patch']) !!}
                         @include('adminPanel.drivers.fields')
                         {!! Form::close() !!}
                     </div>

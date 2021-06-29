@@ -30,37 +30,37 @@ Route::get('landing-page', 'MainController@landing_page');
 
 
 
+
+
+
 Route::get('options', 'MainController@options');
 Route::get('states', 'MainController@states');
 Route::get('donation-types', 'MainController@donation_types');
-
-// Auth
-Route::post('customer/login', 'AuthController@login_or_register_customer');
-Route::post('customer/verify-code', 'AuthController@verify_code_customer');
-
-Route::post('driver/login', 'AuthController@login_or_register_driver');
-Route::post('driver/verify-code', 'AuthController@verify_code_driver');
-
-Route::get('driver-rates/{driverId}', 'DriverController@rates');
-Route::get('driver-rate/{driverRate}', 'DriverController@rate');
-Route::get('customer-rates/{customerId}', 'CustomerController@rates');
-Route::get('customer-rate/{customerRate}', 'CustomerController@rate');
-
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// End Page ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 
-
-//////////////////////////////////////////////////////////////////////////////
-/////////////////////////////// Start Customer ///////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
+// Auth
+// Route::post('customer/login', 'AuthController@login_or_register_customer');
+// Route::post('customer/verify-code', 'AuthController@verify_code_customer');
 
 // Auth
 Route::post('user/login', 'AuthController@login_or_register_user');
 Route::post('user/verify-code', 'AuthController@verify_code_user');
 
+// Route::post('driver/login', 'AuthController@login_or_register_driver');
+// Route::post('driver/verify-code', 'AuthController@verify_code_driver');
+
+Route::get('driver-rates/{driverId}', 'DriverController@rates');
+Route::get('driver-rate/{driverRate}', 'DriverController@rate');
+Route::get('customer-rates/{customerId}', 'CustomerController@rates');
+Route::get('customer-rate/{customerRate}', 'CustomerController@rate');
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Start Customer ///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 Route::group(['middleware' => ['auth:api']], function () {
 
@@ -72,6 +72,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('donate', 'CustomerController@donate');
     Route::post('customer-add-or-update-rate', 'CustomerController@addOrUpdateRate');
     Route::get('customer-wallet', 'CustomerController@wallet');
+    Route::get('customer-donations', 'CustomerController@donations');
+
+    // Driver
+    Route::post('driver-update-information', 'DriverController@update_information');
+    Route::get('driver-orders', 'DriverController@my_orders');
 });
 
 //////////////////////////////////////////////////////////////////////////////

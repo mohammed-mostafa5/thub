@@ -32,7 +32,7 @@ class Driver extends Model
         'name'              => 'required|string|max:191',
         'address'           => 'nullable|string|max:191',
         'housing_type'      => 'nullable|in:1,2',
-        'state_id'          => 'nullable|exists:states,id',
+        'state_id'          => 'required|exists:states,id',
         'building_number'   => 'nullable|numeric',
         'floor_number'      => 'nullable|numeric',
         'apartment_number'  => 'nullable|numeric',

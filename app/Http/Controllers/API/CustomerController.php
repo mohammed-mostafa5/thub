@@ -46,7 +46,7 @@ class CustomerController extends Controller
         return response()->json(compact('user'));
     }
 
-    public function update_phone(Request $request)
+    public function update_phone()
     {
         $user = auth('api')->user();
 
@@ -94,7 +94,12 @@ class CustomerController extends Controller
 
     public function donate()
     {
-        $customer = auth('api')->user()->userable;
+        if (auth('api')->user()->type != 'customer') {
+            return response()->json(['msg' => 'You Are Not Customer']);
+        }
+        $customer = auth('api')->user();
+        dd($customer->userable);
+
         $data = request()->validate([
             'name'              => 'required|string|max:191',
             'address'           => 'required|string|max:191',
@@ -167,6 +172,12 @@ class CustomerController extends Controller
         $customer->load('donations.photos', 'donations.types.donationType');
 
         return response()->json($customer);
+    }
+
+    public function donations()
+    {
+        $data['donations'] = auth('api')->user()->userable->donations;
+        return $data['donations']->load('photos');
     }
 
     //--------------------- End Donation -----------------------//

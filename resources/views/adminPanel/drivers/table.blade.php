@@ -49,9 +49,19 @@
 
             <td>{{ $driver->user->status }}</td>
             <td nowrap>
-                <div class='btn btn-sm-group'>
+                {!! Form::open(['route' => ['adminPanel.drivers.destroy', $driver->id], 'method' => 'delete']) !!}
+                <div class='btn-group'>
+                    @can('drivers view')
                     <a href="{{ route('adminPanel.drivers.show', [$driver->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
+                    @endcan
+                    @can('drivers edit')
+                    <a href="{{ route('adminPanel.drivers.edit', [$driver->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
+                    @endcan
+                    @can('drivers destroy')
+                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-shadow mx-1 btn-transparent-danger', 'onclick' => 'return confirm("'.__('crud.are_you_sure').'")']) !!}
+                    @endcan
                 </div>
+                {!! Form::close() !!}
             </td>
         </tr>
         @endforeach

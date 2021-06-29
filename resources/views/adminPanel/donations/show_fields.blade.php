@@ -72,5 +72,13 @@
 <hr>
 
 <h3>Assign Driver</h3>
+<br>
 
-{!! Form::open(['route' => ['adminPanel.donations.assign_driver',$donation->id], 'method' => 'patch']) !!}
+{{-- {!! Form::model($donation,['route' => ['adminPanel.donations.assign_driver',$donation->id], 'method' => 'patch']) !!} --}}
+{!! Form::model($donation, ['route' => ['adminPanel.donations.assign_driver', $donation->id], 'method' => 'patch']) !!}
+
+{!! Form::select('driver_id', $drivers, null, ['class' => 'form-control','placeholder' => 'Select Driver']) !!}
+
+{!! Form::submit('Assign', ['class' => 'form-control btn btn-primary mt-4']) !!}
+
+{!! Form::close() !!}

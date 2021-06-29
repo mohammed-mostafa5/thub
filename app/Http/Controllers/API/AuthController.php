@@ -24,17 +24,22 @@ class AuthController extends Controller
     public function login_or_register_user(Request $request)
     {
         $phone = $request->validate(['phone' => 'required|numeric']);
+        $driver = User::where($phone)->where('type', 'driver')->first();
 
-        $user = User::where($phone)->firstOr(function () {
-            $customer = Customer::create();
-            return User::create([
-                'phone' => request('phone'),
-                'userable_id' => $customer->id,
-                'userable_type' => "\App\Models\Customer",
-            ]);
-        });
-
-        $user->update(['verify_code' => $this->randomCode(4)]);
+        if ($driver) {
+            return response()->json(['msg' => 'Use Your verification To Complete Login Process']);
+        } else {
+            $user = User::where($phone)->firstOr(function () {
+                $customer = Customer::create();
+                return User::create([
+                    'phone'             => request('phone'),
+                    'userable_id'       => $customer->id,
+                    'userable_type'     => "\App\Models\Customer",
+                    'type'              => "customer",
+                ]);
+            });
+            $user->update(['verify_code' => $this->randomCode(4)]);
+        }
 
         return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $user->verify_code]);
     }
@@ -63,26 +68,24 @@ class AuthController extends Controller
     {
         $phone = $request->validate(['phone' => 'required|numeric']);
 
-        $driver = Driver::where($phone)->firstOr(function () {
-            return Driver::create(['phone' => request('phone')]);
+        $driver = User::where($phone)->firstOr(function () {
+            response()->json(['msg' => 'Wrong Phone Please Check Your Data']);
         });
 
-        $driver->update(['verify_code' => $this->randomCode(4)]);
-
-        return response()->json(['msg' => 'A confirmation code has been sent, check your inbox', 'code' => $driver->verify_code]);
+        return response()->json(['msg' => 'Use Your verification To Complete Login Process']);
     }
 
     public function verify_code_driver(Request $request)
     {
         $inputs = $request->validate(['phone' => 'required|numeric', 'verify_code' => 'required|min:4|max:5']);
 
-        $driver = Driver::firstWhere($inputs);
+        $driver = User::firstWhere($inputs);
 
         if (empty($driver)) {
             return response()->json(['msg' => 'Verify code is not correct'], 403);
         }
 
-        $token = auth('api.driver')->tokenById($driver->id);
+        $token = auth('api')->tokenById($driver->id);
 
         return response()->json(compact('driver', 'token'));
     }

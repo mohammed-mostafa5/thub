@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->unsignedInteger('userable_id')->nullable();
             $table->string('userable_type')->nullable();
+            $table->string('type')->nullable();
+            $table->string('userable')->nullable();
             $table->string('phone')->nullable();
             $table->string('verify_code')->nullable();
             $table->string('balance')->default(0);

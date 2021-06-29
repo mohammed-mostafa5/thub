@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'address',
         'userable_id',
         'userable_type',
+        'type',
         'status',
         'verify_code',
         'balance',
@@ -51,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     public static $rules = [
         'name'              => 'required|string|max:191',
-        'phone'             => 'required|string|max:191',
+        'phone'             => 'required|string|max:191|uniqe:users,phone',
         'address'           => 'nullable|string|max:191',
         'email'             => 'nullable|email|max:191|unique:customers',
         'housing_type'      => 'nullable|in:1,2',

@@ -85,7 +85,7 @@ Route::group(
             Route::prefix('donations')->as('donations.')->group(function () {
                 Route::get('/', 'DonationController@index')->name('index');
                 Route::get('/{donation}', 'DonationController@show')->name('show');
-                Route::patch('/{donation}', 'DonationController@assign_driver')->name('assign_driver');
+                Route::patch('/assign-driver/{donation}', 'DonationController@assign_driver')->name('assign_driver');
             });
 
             Route::resource('socialLinks', SocialLinkController::class);

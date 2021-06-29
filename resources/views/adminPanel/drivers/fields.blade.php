@@ -4,14 +4,21 @@
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
-    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group col-sm-6">
     {!! Form::label('name', __('models/drivers.fields.name') . ':') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
+
+@if (Request::is('*edit'))
+<div class="form-group col-sm-6 d-none">
+    {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
+    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+</div>
+@else
+<div class="form-group col-sm-6">
+    {!! Form::label('phone', __('models/drivers.fields.phone') . ':') !!}
+    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+</div>
+@endif
 
 <div class="form-group col-sm-6">
     {!! Form::label('address', __('models/drivers.fields.address') . ':') !!}

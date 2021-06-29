@@ -56,14 +56,17 @@ class DriverController extends AppBaseController
     public function store(Request $request)
     {
         $input = $request->all();
+
         $request->validate(Driver::$rules);
+        $request->validate(['phone' => 'required|unique:users,phone']);
         $driver = Driver::create($input);
 
         $driver->user()->create([
-            'verify_code' => $this->randomCode(4),
-            'phone' => $request->phone,
-            'userable_id' => $driver->id,
+            'verify_code'   => $this->randomCode(4),
+            'phone'         => $request->phone,
+            'userable_id'   => $driver->id,
             'userable_type' => "\App\Models\Driver",
+            'type'          => "driver",
         ]);
 
         Flash::success('Driver saved successfully.');
@@ -118,7 +121,7 @@ class DriverController extends AppBaseController
     public function update($id, Request $request)
     {
         $driver = Driver::find($id);
-        $request->validate(Driver::rules());
+        $request->validate(Driver::$rules);
         if (empty($driver)) {
             Flash::error('driver not found');
 
