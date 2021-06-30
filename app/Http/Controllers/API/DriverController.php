@@ -56,6 +56,24 @@ class DriverController extends Controller
         return response()->json($data);
     }
 
+    public function picked_up($donation)
+    {
+        $donation_data = Donation::find($donation);
+
+        $donation_data->update(['status' => 1]);
+
+        return response()->json(['msg' => 'status updated successfuly', $donation_data]);
+    }
+
+    public function delevered($donation)
+    {
+        $donation_data = Donation::find($donation);
+
+        $donation_data->update(['status' => 2]);
+
+        return response()->json(['msg' => 'status updated successfuly', $donation_data]);
+    }
+
     //------------------------- End Main ---------------------------//
 
 
