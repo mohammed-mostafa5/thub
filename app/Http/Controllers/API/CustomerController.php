@@ -98,17 +98,16 @@ class CustomerController extends Controller
             return response()->json(['msg' => 'You Are Not Customer']);
         }
         $customer = auth('api')->user();
-        dd($customer->userable);
 
         $data = request()->validate([
             'name'              => 'required|string|max:191',
             'address'           => 'required|string|max:191',
             'state_id'          => 'required|exists:states,id',
             'housing_type'      => 'required|in:1,2',
-            'house_number'      => 'nullable|numeric',
-            'building_number'   => 'nullable|numeric',
-            'floor_number'      => 'nullable|numeric',
-            'apartment_number'  => 'nullable|numeric',
+            'house_number'      => 'required_if:housing_type,1|numeric',
+            'building_number'   => 'required_if:housing_type,2|numeric',
+            'floor_number'      => 'required_if:housing_type,2|numeric',
+            'apartment_number'  => 'required_if:housing_type,2|numeric',
             'pickup_date'       => 'required|date',
             'photos'            => 'nullable|array',
             'photos.*'          => 'nullable|image|mimes:png,jpg,jpeg',
