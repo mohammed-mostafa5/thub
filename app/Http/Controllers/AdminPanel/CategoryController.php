@@ -6,6 +6,7 @@ use App\Http\Requests\AdminPanel\CreateCategoryRequest;
 use App\Http\Requests\AdminPanel\UpdateCategoryRequest;
 use App\Repositories\AdminPanel\CategoryRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Category;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Flash;
@@ -43,9 +44,8 @@ class CategoryController extends AppBaseController
      */
     public function create()
     {
-        $services=Service::active()->parent()->with('children')->get();
-
-        return view('adminPanel.categories.create', compact('services'));
+        $parents = Category::whereNull('parent_id')->get()->pluck('name', 'id');
+        return view('adminPanel.categories.create', compact('parents'));
     }
 
     /**
@@ -103,9 +103,9 @@ class CategoryController extends AppBaseController
             return redirect(route('adminPanel.categories.index'));
         }
 
-        $services=Service::active()->parent()->with('children')->get();
+        $parents = Category::whereNull('parent_id')->get()->pluck('name', 'id');
 
-        return view('adminPanel.categories.edit', compact('category', 'services'));
+        return view('adminPanel.categories.edit', compact('category', 'parents'));
     }
 
     /**

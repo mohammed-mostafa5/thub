@@ -17,10 +17,13 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->unsignedTinyInteger('status')->default(0)->comment('0=>Inactive, 1=>Active');
+            $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
+            $table->unsignedInteger('parent_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
         Schema::create('category_translations', function (Blueprint $table) {
@@ -29,8 +32,8 @@ class CreateCategoriesTable extends Migration
             $table->unsignedInteger('category_id');
             $table->string('locale', 2)->index();
 
-            $table->string('text');
-            $table->string('brief');
+            $table->string('name');
+            $table->string('brief')->nullable();
 
             $table->unique(['category_id', 'locale']);
 

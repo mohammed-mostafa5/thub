@@ -27,9 +27,9 @@ class Category extends Model
 
     protected $dates = ['deleted_at'];
 
-    public $translatedAttributes = ['text', 'brief'];
+    public $translatedAttributes = ['name', 'brief'];
 
-    public $fillable = ['service_id', 'status'];
+    public $fillable = ['parent_id', 'status',];
 
     /**
      * The attributes that should be casted to native types.
@@ -38,7 +38,7 @@ class Category extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'service_id' => 'integer',
+        'parent_id' => 'integer',
         'text' => 'string',
         'brief' => 'string',
         'status' => 'integer'
@@ -50,11 +50,11 @@ class Category extends Model
         $languages = array_keys(config('langs'));
 
         foreach ($languages as $language) {
-            $rules[$language . '.text'] = 'required|string|max:191';
-            $rules[$language . '.brief'] = 'required|string|max:191';
+            $rules[$language . '.name']  = 'required|string|max:191';
+            $rules[$language . '.brief'] = 'nullable|string|max:191';
         }
 
-        $rules['service_id'] = 'required';
+        $rules['parent_id'] = 'nullable';
         $rules['status'] = 'required|in:0,1';
 
         return $rules;
@@ -65,8 +65,8 @@ class Category extends Model
         return $query->where('status', 1);
     }
 
-    public function service()
+    public function parent()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 }

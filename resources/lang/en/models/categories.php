@@ -1,14 +1,14 @@
 <?php
 
-return array (
-  'singular' => 'Category',
-  'plural' => 'Categories',
-  'fields' =>
-  array (
-    'id' => 'ID',
-    'service_id' => 'Service',
-    'text' => 'TEXT',
-    'brief' => 'Brief',
-    'status' => 'Status'
-  ),
+return array(
+    'singular' => 'Category',
+    'plural' => 'Categories',
+    'fields' =>
+    array(
+        'id' => 'ID',
+        'parent_id' => 'Parent',
+        'name' => 'Name',
+        'brief' => 'Brief',
+        'status' => 'Status'
+    ),
 );

@@ -14,8 +14,8 @@
 
         <!-- Name Field -->
         <div class="form-group col-sm-6">
-            {!! Form::label('text', __('models/categories.fields.text').':') !!}
-            {!! Form::text($locale . '[text]', isset($category)? $category->translate($locale)->text : '' , ['class' => 'form-control', 'placeholder' => $name . ' text']) !!}
+            {!! Form::label('name', __('models/categories.fields.name').':') !!}
+            {!! Form::text($locale . '[name]', isset($category)? $category->translate($locale)->name : '' , ['class' => 'form-control', 'placeholder' => $name . ' name']) !!}
         </div>
 
         <!-- brief Field -->
@@ -27,26 +27,17 @@
     </div>
     @endforeach
 </div>
-<!-- Service Id Field -->
+<!-- parent Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('service_id', __('models/categories.fields.service_id').':') !!}
-
-    <select name="service_id" id="service_id" class="form-control">
-        @foreach ($services as $service)
-            <option value="{{ $service->id }}" {{isset($category) ? $category->service_id == $service->id?'selected':'':'' }}>{{ $service->text }}</option>
-            @foreach ($service->children as $item)
-                <option value="{{ $item->id }}" {{isset($category) ? $category->service_id == $item->id?'selected':'':'' }}>{{ $item->text }}</option>
-            @endforeach
-        @endforeach
-    </select>
-
+    {!! Form::label('parent_id', __('models/categories.fields.parent_id').':') !!}
+    {!! Form::select('parent_id', $parents, null, ['class' => 'form-control','placeholder' => 'Select Parent Category']) !!}
 </div>
 
 <!-- Status Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('status', __('models/categories.fields.status').':') !!}
     <label class="radio">
-        {!! Form::radio('status', "1",  "Active") !!}
+        {!! Form::radio('status', "1", "Active") !!}
         <span></span>
         @lang('lang.active')
     </label>
