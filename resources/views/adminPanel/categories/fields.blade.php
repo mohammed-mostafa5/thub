@@ -36,16 +36,19 @@
 <!-- Status Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('status', __('models/categories.fields.status').':') !!}
-    <label class="radio">
-        {!! Form::radio('status', "1", "Active") !!}
-        <span></span>
-        @lang('lang.active')
-    </label>
-    <label class="radio">
-        {!! Form::radio('status', "0", null) !!}
-        <span></span>
-        @lang('lang.inactive')
-    </label>
+    <div class="radio-inline">
+        <label class="radio">
+            {!! Form::radio('status', "1", 'Active') !!}
+            <span></span>
+            @lang('lang.active')
+        </label>
+
+        <label class="radio">
+            {!! Form::radio('status', " 0", null) !!}
+            <span></span>
+            @lang('lang.inactive')
+        </label>
+    </div>
 </div>
 
 <!-- Submit Field -->

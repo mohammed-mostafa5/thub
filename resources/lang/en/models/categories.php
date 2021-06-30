@@ -9,6 +9,9 @@ return array(
         'parent_id' => 'Parent',
         'name' => 'Name',
         'brief' => 'Brief',
-        'status' => 'Status'
+        'status' => 'Status',
+
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
     ),
 );

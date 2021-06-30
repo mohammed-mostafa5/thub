@@ -5,17 +5,17 @@
 </div>
 
 
-<!-- Service Id Field -->
+<!-- parent Id Field -->
 <div class="form-group">
-    {!! Form::label('service_id', __('models/categories.fields.service_id').':') !!}
-    <b>{{ $category->service_id }}</b>
+    {!! Form::label('parent_id', __('models/categories.fields.parent_id').':') !!}
+    <b>{{ $category->parent->name ?? '' }}</b>
 </div>
 
 
 <!-- Text Field -->
 <div class="form-group">
-    {!! Form::label('text', __('models/categories.fields.text').':') !!}
-    <b>{{ $category->text }}</b>
+    {!! Form::label('name', __('models/categories.fields.name').':') !!}
+    <b>{{ $category->name }}</b>
 </div>
 
 
@@ -47,3 +47,20 @@
 </div>
 
 
+
+@foreach ( config('langs') as $locale => $name)
+<h3>
+    <code> {{ $name }} </code>
+</h3>
+<br>
+<div class="form-group">
+    {!! Form::label('name', __('models/categories.fields.name').':') !!}
+    <b>{{ $category->translateOrNew($locale)->name }}</b>
+</div>
+
+<div class="form-group">
+    {!! Form::label('brief', __('models/categories.fields.brief').':') !!}
+    <b>{{ $category->translateOrNew($locale)->brief }}</b>
+</div>
+
+@endforeach
