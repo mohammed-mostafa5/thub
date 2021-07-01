@@ -34,7 +34,7 @@ class CreateCustomersTable extends Migration
         });
 
         Schema::create('customer_donations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->from(10000);
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('driver_id')->nullable();
             $table->dateTime('pickup_date')->nullable();

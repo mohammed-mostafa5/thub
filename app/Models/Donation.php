@@ -14,6 +14,7 @@ class Donation extends Model
     protected $fillable = [
         'customer_id',
         'driver_id',
+        'code',
         'name',
         'address',
         'housing_type',

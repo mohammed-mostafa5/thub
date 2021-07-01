@@ -94,10 +94,11 @@ class CustomerController extends Controller
 
     public function donate()
     {
-        if (auth('api')->user()->type != 'customer') {
+        $customer = User::with('userable')->find(auth('api')->id());
+
+        if ($customer->type != 'customer') {
             return response()->json(['msg' => 'You Are Not Customer']);
         }
-        $customer = auth('api')->user();
 
         $data = request()->validate([
             'name'              => 'required|string|max:191',
@@ -117,7 +118,7 @@ class CustomerController extends Controller
 
         $data['customer_id'] = $customer->id;
 
-        if ($customer->donations->count() > 0) {
+        if ($customer->userable->donations->count() > 0) {
             $donation = Donation::create([
                 'name'              => $data['name'],
                 'state_id'          => $data['state_id'],
@@ -131,7 +132,7 @@ class CustomerController extends Controller
                 'pickup_date'       => $data['pickup_date'],
             ]);
         } else {
-            $customer->update([
+            $customer->userable->update([
                 'name'              => $data['name'],
                 'state_id'          => $data['state_id'],
                 'address'           => $data['address'],
@@ -168,7 +169,7 @@ class CustomerController extends Controller
             ]);
         }
 
-        $customer->load('donations.photos', 'donations.types.donationType');
+        $customer->load('userable.donations.photos', 'userable.donations.types.donationType');
 
         return response()->json($customer);
     }

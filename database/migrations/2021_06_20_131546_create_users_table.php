@@ -15,10 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('userable_id')->nullable();
-            $table->string('userable_type')->nullable();
+            $table->nullableMorphs('userable');
             $table->string('type')->nullable();
-            $table->string('userable')->nullable();
             $table->string('phone')->nullable();
             $table->string('verify_code')->nullable();
             $table->string('balance')->default(0);
