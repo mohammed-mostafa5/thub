@@ -113,6 +113,10 @@ Route::group(
             Route::resource('categories', CategoryController::class);
             Route::resource('states', StateController::class);
             Route::resource('donationTypes', DonationTypeController::class);
+
+            Route::resource('products', ProductController::class);
+            Route::resource('productPhotos', ProductPhotoController::class);
+            Route::resource('productSizes', ProductSizeController::class);
         });
     }
 );
@@ -123,15 +127,12 @@ Route::group(
 
 
 Route::group(['prefix' => 'adminPanel'], function () {
-    Route::resource('products', App\Http\Controllers\AdminPanel\ProductController::class, ["as" => 'adminPanel']);
 });
 
 
 Route::group(['prefix' => 'adminPanel'], function () {
-    Route::resource('productPhotos', App\Http\Controllers\AdminPanel\ProductPhotoController::class, ["as" => 'adminPanel']);
 });
 
 
 Route::group(['prefix' => 'adminPanel'], function () {
-    Route::resource('productSizes', App\Http\Controllers\AdminPanel\ProductSizeController::class, ["as" => 'adminPanel']);
 });

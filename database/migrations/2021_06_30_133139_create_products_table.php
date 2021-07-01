@@ -16,12 +16,15 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id')->from(1000);
-            $table->decimal('old_price');
+            $table->unsignedInteger('category_id');
+            $table->decimal('sale_price')->nullable();
             $table->decimal('price');
             $table->integer('stock');
             $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
 

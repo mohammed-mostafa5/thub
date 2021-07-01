@@ -99,7 +99,7 @@
 
     <!-- Status Field -->
     <div class="form-group col-sm-12">
-        {!! Form::label('status', __('models/services.fields.status').':') !!}
+        {!! Form::label('status', __('models/sliders.fields.status').':') !!}
         <div class="radio-inline">
             <label class="radio">
                 {!! Form::radio('status', "1", 'Active') !!}

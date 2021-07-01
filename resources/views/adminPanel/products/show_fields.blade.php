@@ -4,32 +4,10 @@
     <b>{{ $product->id }}</b>
 </div>
 
-
-<!-- Title Field -->
+<!-- sale Price Field -->
 <div class="form-group">
-    {!! Form::label('title', __('models/products.fields.title').':') !!}
-    <b>{{ $product->title }}</b>
-</div>
-
-
-<!-- Brief Field -->
-<div class="form-group">
-    {!! Form::label('brief', __('models/products.fields.brief').':') !!}
-    <b>{{ $product->brief }}</b>
-</div>
-
-
-<!-- Description Field -->
-<div class="form-group">
-    {!! Form::label('description', __('models/products.fields.description').':') !!}
-    <b>{{ $product->description }}</b>
-</div>
-
-
-<!-- Old Price Field -->
-<div class="form-group">
-    {!! Form::label('old_price', __('models/products.fields.old_price').':') !!}
-    <b>{{ $product->old_price }}</b>
+    {!! Form::label('sale_price', __('models/products.fields.sale_price').':') !!}
+    <b>{{ $product->sale_price }}</b>
 </div>
 
 
@@ -68,3 +46,23 @@
 </div>
 
 
+
+@foreach ( config('langs') as $locale => $name)
+<h3>
+    <code> {{ $name }} </code>
+</h3>
+<br>
+<div class="form-group">
+    {!! Form::label('title', __('models/colors.fields.title').':') !!}
+    <b>{{ $color->translateOrNew($locale)->title }}</b>
+</div>
+<div class="form-group">
+    {!! Form::label('brief', __('models/colors.fields.brief').':') !!}
+    <b>{{ $color->translateOrNew($locale)->brief }}</b>
+</div>
+<div class="form-group">
+    {!! Form::label('description', __('models/colors.fields.description').':') !!}
+    <b>{{ $color->translateOrNew($locale)->description }}</b>
+</div>
+
+@endforeach

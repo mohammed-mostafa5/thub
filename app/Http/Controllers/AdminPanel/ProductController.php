@@ -6,6 +6,7 @@ use App\Http\Requests\AdminPanel\CreateProductRequest;
 use App\Http\Requests\AdminPanel\UpdateProductRequest;
 use App\Repositories\AdminPanel\ProductRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -42,7 +43,8 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-        return view('adminPanel.products.create');
+        $categories = Category::get()->pluck('name', 'id');
+        return view('adminPanel.products.create', compact('categories'));
     }
 
     /**
@@ -55,8 +57,14 @@ class ProductController extends AppBaseController
     public function store(CreateProductRequest $request)
     {
         $input = $request->all();
-
+        // return (request('photos'));
         $product = $this->productRepository->create($input);
+
+        foreach (request('photos') as $photo) {
+            $product->photos()->create([
+                'photo' => $photo
+            ]);
+        }
 
         Flash::success(__('messages.saved', ['model' => __('models/products.singular')]));
 
@@ -100,7 +108,9 @@ class ProductController extends AppBaseController
             return redirect(route('adminPanel.products.index'));
         }
 
-        return view('adminPanel.products.edit')->with('product', $product);
+        $categories = Category::get()->pluck('name', 'id');
+
+        return view('adminPanel.products.edit', compact('categories', 'product'));
     }
 
     /**

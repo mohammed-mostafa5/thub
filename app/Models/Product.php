@@ -70,11 +70,20 @@ class Product extends Model
             $rules[$language . '.description']  = 'required|string|max:191';
         }
 
-        $rules['old_price'] = 'required|string|max:191';
-        $rules['price']     = 'required|numeric';
-        $rules['stock']     = 'required|numeric';
-        $rules['status']    = 'required|numeric|in:0,1';
+        $rules['sale_price'] = 'nullable|string|max:191';
+        $rules['price']      = 'required|numeric';
+        $rules['stock']      = 'required|numeric';
+        $rules['status']     = 'required|numeric|in:0,1';
 
         return $rules;
+    }
+
+
+
+    ###################### Relations ######################
+
+    public function photos()
+    {
+        return $this->hasMany(ProductPhoto::class);
     }
 }
