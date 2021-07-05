@@ -33,12 +33,13 @@ class Product extends Model
 
 
     public $fillable = [
+        'category_id',
         'title',
         'brief',
         'description',
-        'old_price',
-        'price',
-        'stock',
+        // 'old_price',
+        // 'price',
+        // 'stock',
         'status'
     ];
 
@@ -47,16 +48,16 @@ class Product extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'id' => 'integer',
-        'title' => 'string',
-        'brief' => 'string',
-        'description' => 'string',
-        'old_price' => 'decimal:2',
-        'price' => 'decimal:2',
-        'stock' => 'integer',
-        'status' => 'integer'
-    ];
+    // protected $casts = [
+    //     'id' => 'integer',
+    //     'title' => 'string',
+    //     'brief' => 'string',
+    //     'description' => 'string',
+    //     'old_price' => 'decimal:2',
+    //     'price' => 'decimal:2',
+    //     'stock' => 'integer',
+    //     'status' => 'integer'
+    // ];
 
     public $translatedAttributes = ['title', 'brief', 'description'];
 
@@ -70,9 +71,9 @@ class Product extends Model
             $rules[$language . '.description']  = 'required|string|max:191';
         }
 
-        $rules['sale_price'] = 'nullable|string|max:191';
-        $rules['price']      = 'required|numeric';
-        $rules['stock']      = 'required|numeric';
+        // $rules['sale_price'] = 'nullable|string|max:191';
+        // $rules['price']      = 'required|numeric';
+        // $rules['stock']      = 'required|numeric';
         $rules['status']     = 'required|numeric|in:0,1';
 
         return $rules;
@@ -85,5 +86,10 @@ class Product extends Model
     public function photos()
     {
         return $this->hasMany(ProductPhoto::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(ProductItem::class);
     }
 }

@@ -2,23 +2,22 @@
 
 namespace App\Repositories\AdminPanel;
 
-use App\Models\ProductSize;
+use App\Models\Size;
 use App\Repositories\BaseRepository;
 
 /**
- * Class ProductSizeRepository
+ * Class SizeRepository
  * @package App\Repositories\AdminPanel
- * @version June 30, 2021, 1:47 pm UTC
+ * @version July 5, 2021, 8:00 am UTC
 */
 
-class ProductSizeRepository extends BaseRepository
+class SizeRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'product_id',
-        'size'
+        'name'
     ];
 
     /**
@@ -36,6 +35,6 @@ class ProductSizeRepository extends BaseRepository
      **/
     public function model()
     {
-        return ProductSize::class;
+        return Size::class;
     }
 }

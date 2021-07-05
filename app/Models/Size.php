@@ -8,19 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 /**
- * Class ProductSize
+ * Class Size
  * @package App\Models
- * @version June 30, 2021, 1:47 pm UTC
+ * @version July 5, 2021, 8:00 am UTC
  *
- * @property integer $product_id
- * @property string $size
+ * @property string $name
  */
-class ProductSize extends Model
+class Size extends Model
 {
     use SoftDeletes, Translatable;
 
 
-    public $table = 'product_sizes';
+    public $table = 'sizes';
 
 
     protected $dates = ['deleted_at'];
@@ -28,8 +27,7 @@ class ProductSize extends Model
 
 
     public $fillable = [
-        'product_id',
-        'size'
+        'name'
     ];
 
     /**
@@ -39,19 +37,18 @@ class ProductSize extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'product_id' => 'integer',
-        'size' => 'string'
+        'name' => 'string'
     ];
 
 
-    public $translatedAttributes = ['size'];
+    public $translatedAttributes = ['name'];
 
     public static function rules()
     {
         $languages = array_keys(config('langs'));
 
         foreach ($languages as $language) {
-            $rules[$language . '.size']         = 'required|string|max:191';
+            $rules[$language . '.name'] = 'required|string|max:191';
         }
 
         return $rules;

@@ -1,4 +1,3 @@
-
 <!-- Fav Icon Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fav_icon', __('models/options.fields.fav_icon').':') !!}
@@ -78,9 +77,17 @@
 
 
 <!-- welcome_message Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('welcome_message', __('models/options.fields.welcome_message').':') !!}
-    {!! Form::text('welcome_message', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('welcome_message', null, ['class' => 'form-control']) !!}
+
+    <script type="text/javascript">
+        CKEDITOR.replace("{{ 'welcome_message' }}", {
+    filebrowserUploadUrl: "{{route('adminPanel.ckeditor.upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+    });
+    </script>
+
 </div>
 
 <!-- Submit Field -->

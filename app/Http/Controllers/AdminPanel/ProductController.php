@@ -7,6 +7,8 @@ use App\Http\Requests\AdminPanel\UpdateProductRequest;
 use App\Repositories\AdminPanel\ProductRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Category;
+use App\Models\Color;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -44,7 +46,9 @@ class ProductController extends AppBaseController
     public function create()
     {
         $categories = Category::get()->pluck('name', 'id');
-        return view('adminPanel.products.create', compact('categories'));
+        $sizes = Size::get()->pluck('name', 'id');
+        $colors = Color::get()->pluck('name', 'id');
+        return view('adminPanel.products.create', compact('categories', 'colors', 'sizes'));
     }
 
     /**
@@ -54,17 +58,37 @@ class ProductController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateProductRequest $request)
+    public function store(Request $request)
     {
+        // dd(request('size_id'));
         $input = $request->all();
-        // return (request('photos'));
         $product = $this->productRepository->create($input);
+        // dd($request);
 
         foreach (request('photos') as $photo) {
             $product->photos()->create([
                 'photo' => $photo
             ]);
         }
+        // dd(request('size_id'));
+        // dd($product);
+        // dd($request->item);
+        foreach ($request->item as $key => $item) {
+            return ($item);
+            $product->items()->create($item);
+        }
+        // return ($product);
+        // dd(request('item'));
+        // foreach (request('item') as $item) {
+        //     $product->items()->create([
+        //         'product_id' => $product->id,
+        //         'size_id' => $item->size_id,
+        //         'color_id' => $item->color_id,
+        //         'sale_price' => $item->sale_price,
+        //         'price' => $item->price,
+        //         'stock' => $item->stock,
+        //     ]);
+        // }
 
         Flash::success(__('messages.saved', ['model' => __('models/products.singular')]));
 

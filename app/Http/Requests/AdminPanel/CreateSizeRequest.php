@@ -3,9 +3,9 @@
 namespace App\Http\Requests\AdminPanel;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\ProductSize;
+use App\Models\Size;
 
-class UpdateProductSizeRequest extends FormRequest
+class CreateSizeRequest extends FormRequest
 {
 
     /**
@@ -25,8 +25,6 @@ class UpdateProductSizeRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = ProductSize::$rules;
-        
-        return $rules;
+        return Size::rules();
     }
 }

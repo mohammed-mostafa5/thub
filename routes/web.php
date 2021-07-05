@@ -100,6 +100,7 @@ Route::group(
             Route::resource('appFeatures', AppFeatureController::class);
             Route::resource('brands', BrandController::class);
             Route::resource('colors', ColorController::class);
+            Route::resource('sizes', SizeController::class);
 
             // Pages CRUD
             Route::resource('pages', 'PageController');
@@ -116,7 +117,6 @@ Route::group(
 
             Route::resource('products', ProductController::class);
             Route::resource('productPhotos', ProductPhotoController::class);
-            Route::resource('productSizes', ProductSizeController::class);
         });
     }
 );
@@ -124,15 +124,3 @@ Route::group(
 ///////////////////////////////////////////////////////////////////////////
 ///								End admin panel routes 					///
 ///////////////////////////////////////////////////////////////////////////
-
-
-Route::group(['prefix' => 'adminPanel'], function () {
-});
-
-
-Route::group(['prefix' => 'adminPanel'], function () {
-});
-
-
-Route::group(['prefix' => 'adminPanel'], function () {
-});

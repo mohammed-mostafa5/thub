@@ -17,10 +17,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id')->from(1000);
             $table->unsignedInteger('category_id');
-            $table->decimal('sale_price')->nullable();
-            $table->decimal('price');
-            $table->integer('stock');
             $table->unsignedTinyInteger('status')->default(1)->comment('0 => Inactive, 1 => Active');
+
             $table->timestamps();
             $table->softDeletes();
 
@@ -43,13 +41,18 @@ class CreateProductsTable extends Migration
         });
 
 
-        Schema::create('product_color', function (Blueprint $table) {
+        Schema::create('product_items', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->integer('color_id')->unsigned();
+            $table->integer('size_id')->unsigned();
+            $table->decimal('sale_price')->nullable();
+            $table->decimal('price');
+            $table->integer('stock');
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
+            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
         });
     }
 
@@ -60,6 +63,7 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('product_items');
         Schema::drop('product_translations');
         Schema::drop('products');
     }

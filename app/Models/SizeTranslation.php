@@ -6,11 +6,9 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class ProductSizeTranslation extends Model
+class SizeTranslation extends Model
 {
-    protected $table = 'product_size_translations';
-
-    protected $fillable = ['size'];
+    protected $fillable = ['name'];
 
     public $timestamps = false;
 }

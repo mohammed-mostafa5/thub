@@ -43,30 +43,12 @@
 
             <div class="clearfix"></div>
 
-
             <!-- Category Field -->
             <div class="form-group col-sm-6">
                 {!! Form::label('category_id', __('models/products.fields.category_id').':') !!}
                 {!! Form::select('category_id', $categories, null, ['class' => 'form-control', 'placeholder' => 'Select Category']) !!}
             </div>
 
-            <!-- Sale Price Field -->
-            <div class="form-group col-sm-6">
-                {!! Form::label('sale_price', __('models/products.fields.sale_price').':') !!}
-                {!! Form::number('sale_price', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <!-- Price Field -->
-            <div class="form-group col-sm-6">
-                {!! Form::label('price', __('models/products.fields.price').':') !!}
-                {!! Form::number('price', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <!-- Stock Field -->
-            <div class="form-group col-sm-6">
-                {!! Form::label('stock', __('models/products.fields.stock').':') !!}
-                {!! Form::number('stock', null, ['class' => 'form-control']) !!}
-            </div>
 
             <!-- Status Field -->
             <div class="form-group col-sm-12">
@@ -93,7 +75,7 @@
             <br>
             <div id="product-photos">
                 <div id="wrapper">
-                    <h1>Drop your Files</h1>
+                    <h2>Drop your Files</h2>
                     <span>or</span>
                     <br />
                     {{-- <form action="" id="form"> --}}
@@ -108,6 +90,28 @@
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
+            <br>
+            <hr>
+            <br>
+            <h3>Product Items</h3>
+            <br>
+            <div id="product-items">
+                @php
+                $counter = 0
+                @endphp
+                <div class="item w-100 d-flex my-1">
+                    {!! Form::select("item[$counter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
+                    {!! Form::select("item[$counter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
+                    {!! Form::number("item[$counter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
+                    {!! Form::number("item[$counter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
+                    {!! Form::number("item[$counter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+                </div>
+                @php
+                $counter++
+                @endphp
+            </div>
+            <button id="add-item" class="btn btn-success col-2 my-3">Add Item</button>
             <div class="clearfix"></div>
             <br>
             <hr>
@@ -131,26 +135,6 @@
 
 @section('styles')
 <style>
-    @import url('https://fonts.googleapis.com/css?family=Muli:400,700');
-
-    /* * {
-        box-sizing: border-box;
-    } */
-
-    /* html {
-        width: 100%;
-        height: 100%;
-    } */
-
-    /* body {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Muli' !important;
-    } */
-
     button {
         background: green;
         border: none;
@@ -335,19 +319,29 @@
         checkFile(files);
     });
 
-    // form.addEventListener('submit', (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData();
-
-    //     if(files.length > 0) {
-    //         files.forEach((file) => {
-    //             formData.append('file', file);
-    //         });
-    //     } else { alert('You have not uploaded a file');}
-
-    //     console.log('FILES: ', formData.getAll('file'));
-    // });
-
 })();
+</script>
+
+
+<script>
+    $('#add-item').click(function (e) {
+    e.preventDefault();
+    $('#product-items').append(`
+                @php
+                $counter = 0
+                @endphp
+                <div class="item w-100 d-flex my-1">
+                    {!! Form::select("item[$counter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
+                    {!! Form::select("item[$counter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
+                    {!! Form::number("item[$counter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
+                    {!! Form::number("item[$counter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
+                    {!! Form::number("item[$counter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+                </div>
+                @php
+                $counter++
+                @endphp
+    `)
+});
+
 </script>
 @endsection

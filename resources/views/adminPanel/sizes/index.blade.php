@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-    <li class="breadcrumb-item">@lang('models/productSizes.plural')</li>
+    <li class="breadcrumb-item">@lang('models/sizes.plural')</li>
 </ul>
 @endsection
 @section('content')
@@ -12,14 +12,14 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                @lang('models/productSizes.plural')
+                @lang('models/sizes.plural')
                 <span class="d-block text-muted pt-2 font-size-sm">Descriptions</span>
             </h3>
         </div>
-        @can('productSizes create')
+        @can('sizes create')
         <div class="card-toolbar">
             <!--begin::Button-->
-            <a href="{{ route('adminPanel.productSizes.create') . '?languages=' . \App::getLocale() }}" class="btn btn-primary font-weight-bolder">
+            <a href="{{ route('adminPanel.sizes.create') . '?languages=' . \App::getLocale() }}" class="btn btn-primary font-weight-bolder">
                 <span class="svg-icon svg-icon-md">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="card-body">
-        @include('adminPanel.product_sizes.table')
+        @include('adminPanel.sizes.table')
         <div class="pull-right mr-3">
 
         </div>

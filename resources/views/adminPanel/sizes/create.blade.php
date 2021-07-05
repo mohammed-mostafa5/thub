@@ -3,9 +3,9 @@
 @section('breadcrumb')
 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
     <li class="breadcrumb-item">
-        <a href="{!! route('adminPanel.productSizes.index') !!}">@lang('models/productSizes.singular')</a>
+         <a href="{!! route('adminPanel.sizes.index') !!}">@lang('models/sizes.singular')</a>
     </li>
-    <li class="breadcrumb-item active">@lang('crud.edit')</li>
+    <li class="breadcrumb-item active">@lang('crud.add_new')</li>
 </ul>
 @endsection
 @section('content')
@@ -18,11 +18,11 @@
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
-                            <h3 class="card-title">Edit @lang('models/productSizes.singular')</h3>
+                            <h3 class="card-title">Create @lang('models/sizes.singular')</h3>
                         </div>
                         <div class="card-body">
-                            {!! Form::model($productSize, ['route' => ['adminPanel.productSizes.update', $productSize->id], 'method' => 'patch']) !!}
-                              @include('adminPanel.productSizes.fields')
+                            {!! Form::open(['route' => 'adminPanel.sizes.store']) !!}
+                                @include('adminPanel.sizes.fields')
                             {!! Form::close() !!}
                         </div>
                     </div>

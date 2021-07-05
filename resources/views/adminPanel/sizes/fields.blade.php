@@ -18,10 +18,10 @@
             @foreach ( config('langs') as $locale => $name)
 
             <div class="tab-pane fade {{request('languages') == $locale ?'show active':''}}" id="{{$name}}" role="tabpanel" aria-labelledby="{{$name}}-tab">
-                <!-- size Field -->
+                <!-- name Field -->
                 <div class="form-group col-sm-12">
-                    {!! Form::label('size', __('models/productSizes.fields.size').':') !!}
-                    {!! Form::text($locale . '[size]', isset($color)? $color->translateOrNew($locale)->size : '' , ['class' => 'form-control', 'placeholder' => $name . ' size']) !!}
+                    {!! Form::label('name', __('models/sizes.fields.name').':') !!}
+                    {!! Form::text($locale . '[name]', isset($size)? $size->translateOrNew($locale)->name : '' , ['class' => 'form-control', 'placeholder' => $name . ' name']) !!}
                 </div>
 
             </div>
@@ -33,8 +33,9 @@
             <!-- Submit Field -->
             <div class="form-group col-sm-12">
                 {!! Form::submit(__('crud.save'), ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('adminPanel.productSizes.index') }}" class="btn btn-default">@lang('crud.cancel')</a>
+                <a href="{{ route('adminPanel.sizes.index') }}" class="btn btn-default">@lang('crud.cancel')</a>
             </div>
+
 
 
         </div>

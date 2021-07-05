@@ -177,7 +177,7 @@ class CustomerController extends Controller
     public function donations()
     {
         $data['donations'] = auth('api')->user()->userable->donations;
-        return $data['donations']->load('photos');
+        return $data['donations']->load('photos', 'types.donationType');
     }
 
     //--------------------- End Donation -----------------------//
