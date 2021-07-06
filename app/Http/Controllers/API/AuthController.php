@@ -54,7 +54,7 @@ class AuthController extends Controller
         if (empty($data['user'])) {
             return response()->json(['msg' => 'Verify code is not correct'], 403);
         }
-        $data['user']->load('userable');
+        $data['user']->load('userable.state');
         $data['token'] = auth('api')->tokenById($data['user']->id);
 
         return response()->json($data);

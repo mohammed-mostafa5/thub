@@ -121,21 +121,21 @@ class DonationTypeController extends AppBaseController
             return redirect(route('adminPanel.donationTypes.index'));
         }
 
-        // Define Currunt icon Path
-        $icon = "uploads/images/original/$donationType->icon";
-        $icon_thumbnail = "uploads/images/thumbnail/$donationType->icon";
+        // // Define Currunt icon Path
+        // $icon = "uploads/images/original/$donationType->icon";
+        // $icon_thumbnail = "uploads/images/thumbnail/$donationType->icon";
 
         $donationType = $this->donationTypeRepository->update($request->all(), $id);
 
-        if ($request->icon) {
-            // Deleting Current icon
-            if (file_exists($icon)) {
-                unlink(public_path($icon));
-            }
-            if (file_exists($icon_thumbnail)) {
-                unlink(public_path($icon_thumbnail));
-            }
-        }
+        // if ($request->icon) {
+        //     // Deleting Current icon
+        //     if (file_exists($icon)) {
+        //         unlink(public_path($icon));
+        //     }
+        //     if (file_exists($icon_thumbnail)) {
+        //         unlink(public_path($icon_thumbnail));
+        //     }
+        // }
 
         Flash::success(__('messages.updated', ['model' => __('models/donationTypes.singular')]));
 

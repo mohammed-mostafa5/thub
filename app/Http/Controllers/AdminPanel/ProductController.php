@@ -64,7 +64,10 @@ class ProductController extends AppBaseController
         $input = $request->all();
         $product = $this->productRepository->create($input);
         // dd($request);
-
+        $request->validate([
+            'photo' => 'array',
+            'photo.*' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
         foreach (request('photos') as $photo) {
             $product->photos()->create([
                 'photo' => $photo
@@ -73,10 +76,11 @@ class ProductController extends AppBaseController
         // dd(request('size_id'));
         // dd($product);
         // dd($request->item);
-        foreach ($request->item as $key => $item) {
-            return ($item);
-            $product->items()->create($item);
-        }
+
+        // foreach ($request->item as $key => $item) {
+        //     return ($item);
+        //     $product->items()->create($item);
+        // }
         // return ($product);
         // dd(request('item'));
         // foreach (request('item') as $item) {

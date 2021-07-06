@@ -98,20 +98,21 @@
             <br>
             <div id="product-items">
                 @php
-                $counter = 0
+                $itemCounter = 1
                 @endphp
                 <div class="item w-100 d-flex my-1">
-                    {!! Form::select("item[$counter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
-                    {!! Form::select("item[$counter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
-                    {!! Form::number("item[$counter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
-                    {!! Form::number("item[$counter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
-                    {!! Form::number("item[$counter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+                    {!! Form::select("item[$itemCounter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
+                    {!! Form::select("item[$itemCounter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
+                    {!! Form::number("item[$itemCounter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
+                    {!! Form::number("item[$itemCounter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
+                    {!! Form::number("item[$itemCounter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
                 </div>
-                @php
+                {{-- @php
                 $counter++
-                @endphp
+                @endphp --}}
+                {{-- {{dd($counter)}} --}}
             </div>
-            <button id="add-item" class="btn btn-success col-2 my-3">Add Item</button>
+            <button id="add-item" class="btn btn-success col-2 my-3" itemCounter="{{$itemCounter}}">Add Item</button>
             <div class="clearfix"></div>
             <br>
             <hr>
@@ -324,24 +325,22 @@
 
 
 <script>
-    $('#add-item').click(function (e) {
-    e.preventDefault();
-    $('#product-items').append(`
-                @php
-                $counter = 0
-                @endphp
-                <div class="item w-100 d-flex my-1">
-                    {!! Form::select("item[$counter][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
-                    {!! Form::select("item[$counter][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
-                    {!! Form::number("item[$counter][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
-                    {!! Form::number("item[$counter][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
-                    {!! Form::number("item[$counter][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
-                </div>
-                @php
-                $counter++
-                @endphp
-    `)
-});
+    $(document).ready(function () {
+            let countItem = $(this).attr('itemCounter');
+            $('#add-item').click(function () {
+            // console.log(countItem);
+            $('#product-items').append(`
+                        <div class="item w-100 d-flex my-1">
+                            {!! Form::select("item[${countItem}][size_id]", $sizes, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Size']) !!}
+                            {!! Form::select("item[${countItem}][color_id]", $colors, null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Select Color']) !!}
+                            {!! Form::number("item[${countItem}][sale_price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Sale Price']) !!}
+                            {!! Form::number("item[${countItem}][price]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Regular Price']) !!}
+                            {!! Form::number("item[${countItem}][stock]", null, ['class' => 'form-control col-2 mx-1', 'placeholder' => 'Stock']) !!}
+                        </div>
+            `)
+            $(this).attr('itemCounter', ++countItem);
+        });
+    });
 
 </script>
 @endsection

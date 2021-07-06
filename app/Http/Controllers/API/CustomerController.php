@@ -33,15 +33,16 @@ class CustomerController extends Controller
         $data = $request->validate([
             'name'              => 'required|string|max:191',
             'address'           => 'nullable|string|max:191',
-            'housing_type'      => 'nullable|in:1,2',
             'state_id'          => 'nullable',
-            'building_number'   => 'nullable',
-            'floor_number'      => 'nullable',
-            'apartment_number'  => 'nullable',
+            'housing_type'      => 'required|in:1,2',
+            'house_number'      => 'required_if:housing_type,1|numeric',
+            'building_number'   => 'required_if:housing_type,2|numeric',
+            'floor_number'      => 'required_if:housing_type,2|numeric',
+            'apartment_number'  => 'required_if:housing_type,2|numeric',
         ]);
 
         $user->userable()->update($data);
-        $user->load('userable');
+        $user->load('userable.state');
 
         return response()->json(compact('user'));
     }

@@ -62,4 +62,9 @@ class Customer extends Model
     {
         return $this->hasMany(Donation::class, 'customer_id', 'id');
     }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 }
