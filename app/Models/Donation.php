@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Donation extends Model
 {
@@ -17,15 +18,63 @@ class Donation extends Model
         'code',
         'name',
         'address',
+        'lat',
+        'long',
         'housing_type',
         'house_number',
         'state_id',
         'building_number',
-        'floor_number',
         'apartment_number',
         'pickup_date',
-        'status',  // 0 => New, 1 => Picked up, 2 => Delevered
+        'status',  // 0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up, 4 => Reschedule, 5 => InProgress
+        'driver_notes',
+        'customer_notes',
+        'bags',
+        'plastic_bags',
+        'cartons',
+        'cars',
+        'feedback',
+        'feedback_notes',
     ];
+
+    ############################## Appends ###############################
+
+    protected $appends = ['status_text'];
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'New';
+                break;
+            case 1:
+                return 'Picked up';
+                break;
+            case 2:
+                return 'Delivered';
+                break;
+            case 3:
+                return 'Not Picked up';
+                break;
+            case 4:
+                return 'Reschedule';
+                break;
+            case 5:
+                return 'InProgress';
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+
+    public function setPickupDateAttribute($value)
+    {
+        $this->attributes['pickup_date'] = (new Carbon($value))->format('y-m-d G:i:s');
+    }
+
 
 
     ############################### Relations ##################################

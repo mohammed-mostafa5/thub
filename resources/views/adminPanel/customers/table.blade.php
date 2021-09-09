@@ -29,20 +29,24 @@
 <table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
         <tr>
+            <th>@lang('models/customers.fields.id')</th>
             <th>@lang('models/customers.fields.name')</th>
             <th>@lang('models/customers.fields.phone')</th>
-            <th>@lang('models/customers.fields.email')</th>
-            <th>@lang('models/customers.fields.status')</th>
+            <th>@lang('models/customers.fields.created_at')</th>
+            <th>@lang('models/customers.fields.address')</th>
+            {{-- <th>@lang('models/customers.fields.status')</th> --}}
             <th>@lang('crud.action')</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($customers as $customer)
+        @foreach ($customers as $customer)
         <tr>
+            <td>{{ $customer->id }}</td>
             <td>{{ $customer->name }}</td>
-            <td>{{ $customer->phone }}</td>
-            <td>{{ $customer->email }}</td>
-            <td>{{ $customer->status }}</td>
+            <td>{{ $customer->user->phone ?? '' }}</td>
+            <td>{{ $customer->created_at }}</td>
+            <td>{{ $customer->address }}</td>
+            {{-- <td>{{ $customer->user->status ?? '' }}</td> --}}
             <td nowrap>
                 <div class='btn btn-sm-group'>
                     <a href="{{ route('adminPanel.customers.show', [$customer->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>

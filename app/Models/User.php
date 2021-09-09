@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'status',
         'verify_code',
         'balance',
+        'device_id',
     ];
 
     /**
@@ -58,7 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'housing_type'      => 'nullable|in:1,2',
         'state_id'          => 'nullable',
         'building_number'   => 'nullable',
-        'floor_number'      => 'nullable',
         'apartment_number'  => 'nullable',
         'status'            => 'nullable',
         'verify_code'       => 'nullable',
@@ -94,5 +94,20 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function userable()
     {
         return $this->morphTo();
+    }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

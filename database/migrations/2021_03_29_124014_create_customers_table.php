@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
 
             // $table->rememberToken();
@@ -40,13 +40,25 @@ class CreateCustomersTable extends Migration
             $table->dateTime('pickup_date')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
             $table->unsignedTinyInteger('housing_type')->nullable()->comment(' 1 => House, 2 => Apartment');
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
-            $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delevered');
+            $table->unsignedTinyInteger('status')->default(0)->comment('0 => New, 1 => Picked up, 2 => Delivered, 3 => Not Picked up, 4 => Reschedule, 5 => InProgress');
+            $table->text('driver_notes')->nullable();
+            $table->text('customer_notes')->nullable();
+
+            $table->unsignedInteger('bags')->nullable();
+            $table->unsignedInteger('plastic_bags')->nullable();
+            $table->unsignedInteger('cartons')->nullable();
+            $table->unsignedInteger('cars')->nullable();
+
+            $table->unsignedTinyInteger('feedback')->nullable();
+            $table->text('feedback_notes')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

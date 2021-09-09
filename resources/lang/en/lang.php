@@ -23,12 +23,15 @@ return [
 
     // C c
 
+    'currency' => 'AED',
+    'checkout_notification' => 'Your order created successfuly with order id : ',
     '' => '',
     '' => '',
 
     // D d
 
     'deactivate' => 'Deactivate',
+    'donation_delivered' => 'Thanks, Your Donation Delivered To Thub Successfuly',
     '' => '',
 
     // E e

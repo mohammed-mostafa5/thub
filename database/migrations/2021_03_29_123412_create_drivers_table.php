@@ -22,13 +22,23 @@ class CreateDriversTable extends Migration
             $table->unsignedInteger('state_id')->nullable();
             $table->string('house_number')->nullable();
             $table->string('building_number')->nullable();
-            $table->string('floor_number')->nullable();
+
             $table->string('apartment_number')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+        });
+
+        Schema::create('driver_weight', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('driver_id')->nullable();
+            $table->dateTime('date')->nullable();
+            $table->unsignedInteger('weight')->nullable();
+
+            // $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
+
         });
     }
 
@@ -39,6 +49,7 @@ class CreateDriversTable extends Migration
      */
     public function down()
     {
+        Schema::drop('driver_weight');
         Schema::drop('drivers');
     }
 }

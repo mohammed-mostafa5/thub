@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\NotificationPusher;
 use App\Models\Faq;
 use App\Models\Blog;
 use App\Models\Meta;
@@ -27,13 +28,28 @@ use App\Models\VehicleType;
 use App\Models\DonationType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use OneSignal;
 
 class MainController extends Controller
 {
     public function test()
     {
-        return ('test home');
+
+
+        OneSignal::sendNotificationToAll(
+            "Some Message",
+            $url = null,
+            $data = null,
+            $buttons = null,
+            $schedule = null,
+            'ionsgsdngsdoinfweonfweonfserofnesefoiei'
+        );
+
+        return ('Done');
     }
 
     ##########################################################################
@@ -65,44 +81,20 @@ class MainController extends Controller
 
 
 
-
-
-
-
-    public function brands()
-    {
-        $brands = Brand::get();
-
-        return response()->json(compact('brands'));
-    }
-
-    public function colors()
-    {
-        $colors = Color::get();
-
-        return response()->json(compact('colors'));
-    }
-
-    public function categories(Request $request)
-    {
-        $categories = Category::where('service_id', $request->service_id)->active()->get();
-
-        return response()->json(compact('categories'));
-    }
-
-
     ##########################################################################
 
     // Pages
 
     public function landing_page()
     {
-        $slider = Slider::active()->orderBy('in_order_to')->get();
-        $services = Service::active()->get();
-        $blogs = Blog::latest()->limit(3)->get();
-        $appFeatures = AppFeature::get();
+        $data['slider'] = Slider::active()->orderBy('in_order_to')->get();
+        $data['latest_products'] = Product::with('category', 'photos', 'items.color', 'items.size')->latest()->limit(12)->get();
+        $data['donation_types'] = DonationType::get();
 
-        return response()->json(compact('slider', 'services', 'blogs', 'appFeatures'));
+        // $blogs = Blog::latest()->limit(3)->get();
+        // $appFeatures = AppFeature::get();
+
+        return response()->json($data);
     }
 
     public function pages($id)
@@ -119,7 +111,7 @@ class MainController extends Controller
         $data['phone']          = $informations->where('id', 1)->first()->value;
         $data['email']          = $informations->where('id', 2)->first()->value;
         $data['address']        = $informations->where('id', 3)->first()->value;
-        $data['description']    = $informations->where('id', 4)->first()->value;
+        // $data['description']    = $informations->where('id', 4)->first()->value;
 
         $social = SocialLink::get();
 
@@ -164,7 +156,7 @@ class MainController extends Controller
 
     public function blogs()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::latest()->paginate(8);
 
         return response()->json(compact('blogs'));
     }
@@ -176,10 +168,10 @@ class MainController extends Controller
         return response()->json(compact('blog'));
     }
 
-    public function faqs()
-    {
-        $data['faqCategories'] = FaqCategory::orderByTranslation('name')->with('faqs')->get();
+    // public function faqs()
+    // {
+    //     $data['faqCategories'] = FaqCategory::orderByTranslation('name')->with('faqs')->get();
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 }

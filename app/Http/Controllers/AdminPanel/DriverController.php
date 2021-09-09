@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use App\Helpers\HelperFunctionTrait;
-use App\Http\Requests\AdminPanel\CreateDriverRequest;
-use App\Http\Requests\AdminPanel\UpdateDriverRequest;
-use App\Repositories\AdminPanel\DriverRepository;
-use App\Http\Controllers\AppBaseController;
-use App\Models\Driver;
-use App\Models\State;
-use Illuminate\Http\Request;
+use App\Exports\DriversExport;
 use Flash;
 use Response;
+use App\Models\State;
+use App\Models\Driver;
+use Illuminate\Http\Request;
+use App\Helpers\HelperFunctionTrait;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\AdminPanel\DriverRepository;
+use App\Http\Requests\AdminPanel\CreateDriverRequest;
+use App\Http\Requests\AdminPanel\UpdateDriverRequest;
 
 class DriverController extends AppBaseController
 {
@@ -65,7 +67,7 @@ class DriverController extends AppBaseController
             'verify_code'   => $this->randomCode(4),
             'phone'         => $request->phone,
             'userable_id'   => $driver->id,
-            'userable_type' => "\App\Models\Driver",
+            'userable_type' => "App\Models\Driver",
             'type'          => "driver",
         ]);
 
@@ -129,6 +131,9 @@ class DriverController extends AppBaseController
         }
 
         $driver->update($request->all());
+        if (request('phone')) {
+            $driver->user->update(['phone' => request('phone')]);
+        }
 
         Flash::success('driver updated successfully.');
 
@@ -166,5 +171,12 @@ class DriverController extends AppBaseController
         $driver->user->update(['status' => 0]);
 
         return back();
+    }
+
+
+
+    public function export()
+    {
+        return Excel::download(new DriversExport, 'drivers.xlsx');
     }
 }

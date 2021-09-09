@@ -8,6 +8,8 @@ use App\Repositories\AdminPanel\ProductRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Product;
+use App\Models\ProductItem;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Flash;
@@ -48,6 +50,7 @@ class ProductController extends AppBaseController
         $categories = Category::get()->pluck('name', 'id');
         $sizes = Size::get()->pluck('name', 'id');
         $colors = Color::get()->pluck('name', 'id');
+
         return view('adminPanel.products.create', compact('categories', 'colors', 'sizes'));
     }
 
@@ -60,39 +63,26 @@ class ProductController extends AppBaseController
      */
     public function store(Request $request)
     {
-        // dd(request('size_id'));
+        $request->validate(Product::rules());
+
         $input = $request->all();
         $product = $this->productRepository->create($input);
-        // dd($request);
-        $request->validate([
-            'photo' => 'array',
-            'photo.*' => 'required|image|mimes:png,jpg,jpeg',
-        ]);
+
         foreach (request('photos') as $photo) {
             $product->photos()->create([
                 'photo' => $photo
             ]);
         }
-        // dd(request('size_id'));
-        // dd($product);
-        // dd($request->item);
 
-        // foreach ($request->item as $key => $item) {
-        //     return ($item);
-        //     $product->items()->create($item);
-        // }
-        // return ($product);
-        // dd(request('item'));
-        // foreach (request('item') as $item) {
-        //     $product->items()->create([
-        //         'product_id' => $product->id,
-        //         'size_id' => $item->size_id,
-        //         'color_id' => $item->color_id,
-        //         'sale_price' => $item->sale_price,
-        //         'price' => $item->price,
-        //         'stock' => $item->stock,
-        //     ]);
-        // }
+
+        foreach ($request->item as $key => $item) {
+            $product->items()->create($item);
+        }
+
+        $minPrice = $product->items()->min('price');
+        $minSalePrice = $product->items()->min('sale_price');
+        $price = collect([$minPrice, $minSalePrice]);
+        $product->update(['min_price' => $price->min()]);
 
         Flash::success(__('messages.saved', ['model' => __('models/products.singular')]));
 
@@ -137,8 +127,10 @@ class ProductController extends AppBaseController
         }
 
         $categories = Category::get()->pluck('name', 'id');
+        $sizes = Size::get()->pluck('name', 'id');
+        $colors = Color::get()->pluck('name', 'id');
 
-        return view('adminPanel.products.edit', compact('categories', 'product'));
+        return view('adminPanel.products.edit', compact('categories', 'product', 'sizes', 'colors'));
     }
 
     /**
@@ -149,14 +141,33 @@ class ProductController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateProductRequest $request)
+    public function update($id, Request $request)
     {
+        $request->validate(array_merge(Product::rules(), ['photos' => 'nullable']));
+
         $product = $this->productRepository->find($id);
 
         if (empty($product)) {
             Flash::error(__('messages.not_found', ['model' => __('models/products.singular')]));
 
             return redirect(route('adminPanel.products.index'));
+        }
+
+        if (request('photos')) {
+
+            $product->photos()->delete();
+
+            foreach (request('photos') as $photo) {
+                $product->photos()->create([
+                    'photo' => $photo
+                ]);
+            }
+        }
+
+        if (!empty($request->item)) {
+            foreach ($request->item as $key => $item) {
+                $product->items()->updateOrCreate(['id' => $key], $item);
+            }
         }
 
         $product = $this->productRepository->update($request->all(), $id);
@@ -190,5 +201,16 @@ class ProductController extends AppBaseController
         Flash::success(__('messages.deleted', ['model' => __('models/products.singular')]));
 
         return redirect(route('adminPanel.products.index'));
+    }
+
+    public function destroyItem($id)
+    {
+        ProductItem::find($id)->delete();
+
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+
+        return back();
     }
 }

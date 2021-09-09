@@ -61,7 +61,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                     <!--begin::Aside header-->
                     <a href="{{ route('home') }}" class="text-center mb-10">
-                        <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{asset('img/4go-white.png')}}" class="max-h-70px" alt="" />
+                        <img onError="this.onerror=null;this.src='{{asset('uploads/images/original/default.png')}}';" src="{{\App\Models\Option::first()->logo_thumbnail_path}}" class="max-h-70px" alt="" />
                     </a>
                     <!--end::Aside header-->
 
@@ -92,7 +92,7 @@ License: You must have a valid license purchased only from themeforest(the above
                             @csrf
                             <!--begin::Title-->
                             <div class="pb-13 pt-lg-0 pt-5">
-                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to 4GO</h3>
+                                <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to {{config('app.name')}}</h3>
                             </div>
                             <!--begin::Title-->
                             @include('flash::message')

@@ -19,6 +19,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "astrotomic/laravel-translatable": "^11.9",
+        "berkayk/onesignal-laravel": "^1.0",
         "cviebrock/eloquent-sluggable": "^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -32,6 +33,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "3.0",
         "laravelcollective/html": "^6.2",
+        "maatwebsite/excel": "^3.1",
         "pusher/pusher-php-server": "^7.0",
         "spatie/laravel-permission": "^4.0",
         "tymon/jwt-auth": "^1.0"

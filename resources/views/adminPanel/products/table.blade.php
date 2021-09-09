@@ -1,14 +1,27 @@
+<!--begin::Search Form-->
+<div class="mb-7">
+    <div class="row align-items-center">
+        <div class="col-lg-9 col-xl-8">
+            <div class="row align-items-center">
+                <div class="col-md-4 my-2 my-md-0">
+                    <div class="input-icon">
+                        <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                        <span><i class="flaticon2-search-1 text-muted"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Search Form-->
 <!--begin: Datatable-->
-<table class="table table-separate table-head-custom table-checkable" id="kt_datatable1">
+<table class="datatable datatable-bordered datatable-head-custom table-hover" id="kt_datatable">
     <thead>
         <tr>
             <th>@lang('models/products.fields.id')</th>
             <th>@lang('models/products.fields.title')</th>
             <th>@lang('models/products.fields.brief')</th>
-            <th>@lang('models/products.fields.description')</th>
-            <th>@lang('models/products.fields.sale_price')</th>
-            <th>@lang('models/products.fields.price')</th>
-            <th>@lang('models/products.fields.stock')</th>
+            <th>@lang('models/products.fields.created_at')</th>
             <th>@lang('models/products.fields.status')</th>
             <th>@lang('crud.action')</th>
         </tr>
@@ -18,18 +31,15 @@
         <tr>
             <td>{{ $product->id }}</td>
             <td>{{ $product->title }}</td>
-            <td>{{ $product->brief }}</td>
-            <td>{{ $product->description }}</td>
-            <td>{{ $product->sale_price }}</td>
-            <td>{{ $product->price }}</td>
-            <td>{{ $product->stock }}</td>
-            <td>{{ $product->status }}</td>
+            <td>{{ Str::limit($product->brief, 50, '...') }}</td>
+            <td>{{ $product->created_at->diffForHumans() }}</td>
+            <td>{{ $product->status}}</td>
             <td nowrap>
                 {!! Form::open(['route' => ['adminPanel.products.destroy', $product->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    @can('products view')
+                    {{-- @can('products view')
                     <a href="{{ route('adminPanel.products.show', [$product->id]) }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-success'><i class="fa fa-eye"></i></a>
-                    @endcan
+                    @endcan --}}
                     @can('products edit')
                     <a href="{{ route('adminPanel.products.edit', [$product->id]) . '?languages=' . \App::getLocale() }}" class='btn btn-sm btn-shadow mx-1 btn-transparent-primary'><i class="fa fa-edit"></i></a>
                     @endcan

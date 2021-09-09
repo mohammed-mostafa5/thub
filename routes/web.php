@@ -76,17 +76,27 @@ Route::group(
             Route::resource('drivers', DriverController::class);
             Route::patch('/deactivate/{driver}', 'DriverController@deactivate')->name('drivers.deactivate');
 
+            Route::get('driver-weight', 'DriverWeightController@index')->name('driver_weights.index');
+            Route::post('driver-weight-date-filter', 'DriverWeightController@dateFilter')->name('driver_weights.dateFilter');
+            Route::patch('driver-update-weight/{id}', 'DriverWeightController@updateDriverWeight')->name('driver_weights.updateDriverWeight');
+            Route::get('driver-weight-export', 'DriverWeightController@export')->name('driver_weights.export');
+            Route::get('drivers-export', 'DriverController@export')->name('drivers.export');
+
 
             Route::prefix('customers')->as('customers.')->group(function () {
                 Route::get('/', 'CustomerController@index')->name('index');
                 Route::get('/{customer}', 'CustomerController@show')->name('show');
             });
+            Route::get('customers-export', 'CustomerController@export')->name('customers.export');
 
             Route::prefix('donations')->as('donations.')->group(function () {
                 Route::get('/', 'DonationController@index')->name('index');
                 Route::get('/{donation}', 'DonationController@show')->name('show');
                 Route::patch('/assign-driver/{donation}', 'DonationController@assign_driver')->name('assign_driver');
+                Route::patch('/update-pickup-date/{donation}', 'DonationController@updatePickupDate')->name('updatePickupDate');
             });
+            Route::post('donations-date-filter', 'DonationController@dateFilter')->name('donations.dateFilter');
+            Route::get('donations-export', 'DonationController@export')->name('donations.export');
 
             Route::resource('socialLinks', SocialLinkController::class);
             Route::post('ckeditor/upload', 'CkeditorController@upload')->name('ckeditor.upload');
@@ -117,6 +127,16 @@ Route::group(
 
             Route::resource('products', ProductController::class);
             Route::resource('productPhotos', ProductPhotoController::class);
+
+            Route::delete('products/delete-item/{id}', 'ProductController@destroyItem')->name('products.destroy.item');
+
+            Route::resource('orders', OrderController::class);
+            Route::patch('/assign-driver/{order}', 'OrderController@assign_driver')->name('orders.assign_driver');
+
+            Route::post('orders-date-filter', 'OrderController@dateFilter')->name('orders.dateFilter');
+            Route::get('orders-export', 'OrderController@export')->name('orders.export');
+
+            Route::patch('orders/delevered/{order}', 'OrderController@delevered')->name('orders.delevered');
         });
     }
 );
